@@ -1,11 +1,11 @@
-angular.module('godzillaApp') .factory('orderFactory', ['$http', function($http) {
+app.factory('orderFactory', ['$http', function($http) {
     var urlBase = '/api/orders/';
     var orderFactory = {};
 
     // Get all orders
     orderFactory.getAllOrders = function () {
       return $http.get(urlBase).then(function(result){
-        return result;
+        return result.data;
       });
     };
 
