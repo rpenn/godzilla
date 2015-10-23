@@ -13,8 +13,8 @@ var ProductsSchema = new mongoose.Schema({
        subtotal: {
           type: Number
        }
-       
+
 });
 
-module.exports = mongoose.model('Products', productsSchema);
+module.exports = mongoose.model('Products', ProductsSchema);
 

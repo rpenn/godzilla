@@ -1,4 +1,4 @@
-angular.module('godzillaApp') .factory('orderFactory', ['$http', function($http) {
+app.factory('orderFactory', ['$http', function($http) {
     var urlBase = '/api/orders/';
     var orderFactory = {};
 
