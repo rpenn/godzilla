@@ -14,13 +14,13 @@ var ProductSchema = new mongoose.Schema({
        },
        photo: {
           type: String,
-          default: 'placehold'
+          default: 'http://tattoolicious.com/assets/uploads/images/T-Shirt.jpg'
        },
        description: {
-          type: [String]
+          type: String
        },
        price: {
-          type: [String]
+          type: Number
        },
        review: {
           type: [Review.schema]
