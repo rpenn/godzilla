@@ -1,6 +1,6 @@
 var router = require('express').Router();
 
-var Order = require('./order.model');
+var Order = require('../../../db/models/order');
 
 router.get('/', function (req, res, next){
 	Order.find()

@@ -5,7 +5,7 @@ app.factory('orderFactory', ['$http', function($http) {
     // Get all orders
     orderFactory.getAllOrders = function () {
       return $http.get(urlBase).then(function(result){
-        return result;
+        return result.data;
       });
     };
 
