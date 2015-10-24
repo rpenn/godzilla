@@ -8,8 +8,16 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('SignupCtrl', function ($scope, AuthService, $state) {
+app.controller('SignupCtrl', function ($scope, AuthService, $state, userFactory) {
 
+    $scope.user = {
+        address: []
+    };
 
+    $scope.address = {};
 
+    $scope.createUser = function(){
+        $scope.user.address.push($scope.address);
+        userFactory.createUser($scope.user);
+    }
 });

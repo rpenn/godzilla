@@ -2,8 +2,8 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 
-var Address = require('./address');
-var Order = require('./order');
+var Address = mongoose.model('Address');
+//var Order = mongoose.model('Order');
 
 var userSchema = new mongoose.Schema({
     firstName: {
@@ -15,12 +15,12 @@ var userSchema = new mongoose.Schema({
     email: {
         type: String
     },
-    shippingAddresses: {
-        type: [ Address.schema ] 
+    address: {
+        type: [Address.schema]
     },
-    orders: {
-        type: [ Order.schema ]
-    },
+    //orders: {
+    //    type: [ Order.schema ]
+    //},
     password: {
         type: String
     },

@@ -1,5 +1,5 @@
 app.factory('userFactory', ['$http', function($http) {
-    var urlBase = '/api/users/';
+    var urlBase = '/api/user';
     var userFactory = {};
 
     // Get all users

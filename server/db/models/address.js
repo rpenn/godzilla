@@ -15,12 +15,12 @@ var AddressSchema = new mongoose.Schema({
           type: String
        },
        addressZip: {
-          type: Number
+          type: String
        },
        addressCountry: {
           type: String
        }
 });
 
-module.exports = mongoose.model('Address', AddressSchema);
+mongoose.model('Address', AddressSchema);
 
