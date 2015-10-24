@@ -3,11 +3,11 @@ var router = require('express').Router();
 var Product = require('../../../db/models/product');
 
 router.get('/', function (req, res, next) {
+    console.log('here!');
     Product.find()
         .then(function (products) {
             res.json(products);
-        })
-        .then(null, next);
+        });
 })
 
 router.post('/', function (req, res, next) {

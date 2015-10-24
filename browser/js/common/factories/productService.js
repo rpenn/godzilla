@@ -4,8 +4,9 @@ app.factory('productFactory', ['$http', function($http) {
 
     // Get all products
     productFactory.getAllProducts = function () {
+      console.log("getall products")
       return $http.get(urlBase).then(function(result){
-        return result;
+        return result.data;
       });
     };
 
