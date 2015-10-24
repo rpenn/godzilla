@@ -18,7 +18,6 @@ router.post('/', function (req, res, next){
     if(req.body){
     	for(var x=0; x < req.body.address.length; x++){
     		req.body.address[x] = new Address(req.body.address[x]);
-    		console.log(req.body.address[x]);
     	}
 
        var user = new User(req.body);
