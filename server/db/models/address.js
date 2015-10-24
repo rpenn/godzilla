@@ -2,25 +2,25 @@
 var mongoose = require('mongoose');
 
 var AddressSchema = new mongoose.Schema({
-       addressLine1: {
+       address1: {
           type: String
        },
-       addressLine2: {
+       address2: {
 	        type: String
        },
-       addressCity: {
+       city: {
           type: String
        },
-       addressState: {
+       state: {
           type: String
        },
-       addressZip: {
-          type: Number
+       zip: {
+          type: String
        },
-       addressCountry: {
+       country: {
           type: String
        }
 });
 
-module.exports = mongoose.model('Address', AddressSchema);
+mongoose.model('Address', AddressSchema);
 

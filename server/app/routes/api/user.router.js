@@ -1,6 +1,7 @@
 var router = require('express').Router();
-
-var User = require('./user.model');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var Address = mongoose.model('Address');
 
 router.get('/', function (req, res, next){
 	User.find().exec()
@@ -11,11 +12,23 @@ router.get('/', function (req, res, next){
 })
 
 router.post('/', function (req, res, next){
-	User.create(req.body)
-		.then(function (user){
-			res.send(201).json(user)
-		})
-		.then(null, next);
+
+	
+
+    if(req.body){
+    	for(var x=0; x < req.body.address.length; x++){
+    		req.body.address[x] = new Address(req.body.address[x]);
+    	}
+
+       var user = new User(req.body);
+
+        console.log(user);
+        user.save()
+            .then(function (user){
+                res.status(201).json(user)
+            });
+    }
+
 })
 
 router.get('/:id', function (req, res, next){

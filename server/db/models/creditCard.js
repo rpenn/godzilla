@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-var Address = require('./address');
+var Address = mongoose.model('Address');
 
 var creditCardSchema = new mongoose.Schema({
        nameOnCard: {
