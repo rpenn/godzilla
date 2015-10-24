@@ -12,14 +12,19 @@ router.get('/', function (req, res, next){
 })
 
 router.post('/', function (req, res, next){
-    if(req.body){
-        var address = req.body.address.map(function(addr){
-            return new Address(addr);
-        });
 
-        req.body.address = address;
-        console.log(req.body);
-        User.create(req.body)
+	
+
+    if(req.body){
+    	for(var x=0; x < req.body.address.length; x++){
+    		req.body.address[x] = new Address(req.body.address[x]);
+    		console.log(req.body.address[x]);
+    	}
+
+       var user = new User(req.body);
+
+        console.log(user);
+        user.save()
             .then(function (user){
                 res.status(201).json(user)
             });

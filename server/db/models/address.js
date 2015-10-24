@@ -2,22 +2,22 @@
 var mongoose = require('mongoose');
 
 var AddressSchema = new mongoose.Schema({
-       addressLine1: {
+       address1: {
           type: String
        },
-       addressLine2: {
+       address2: {
 	        type: String
        },
-       addressCity: {
+       city: {
           type: String
        },
-       addressState: {
+       state: {
           type: String
        },
-       addressZip: {
+       zip: {
           type: String
        },
-       addressCountry: {
+       country: {
           type: String
        }
 });
