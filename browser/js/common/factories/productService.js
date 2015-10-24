@@ -1,5 +1,5 @@
 app.factory('productFactory', ['$http', function($http) {
-    var urlBase = '/api/products/';
+    var urlBase = '/api/product/';
     var productFactory = {};
 
     // Get all products
@@ -10,10 +10,8 @@ app.factory('productFactory', ['$http', function($http) {
     };
 
     // Create a new product
-    productFactory.createProduct = function (user) {
-      return $http.post(urlBase, user).then(function(result){
-        return result;
-      });
+    productFactory.createProduct = function (product) {
+      return $http.post(urlBase, product);
     };
 
     // Get a product by id

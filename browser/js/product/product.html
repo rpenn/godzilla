@@ -1,29 +1,36 @@
 <div class='container'>
-	<form name="product">
+	<form name="productForm">
 	  <div class="form-group">
 	    <label for="name">Name</label>
-	    <input type="text" class="form-control" id="name" placeholder="Product Name">
+	    <input type="text" class="form-control" id="name" ng-model="product.name" placeholder="Product Name">
 	  </div>
 	  <div class="form-group">
 	    <label for="category">Category</label>
-	    <input type="text" class="form-control" id="category" placeholder="category">
+	    <input type="text" class="form-control" id="category"  ng-model="product.category" placeholder="category">
 	  </div>
+
 	  <div class="form-group">
 	    <label for="tags">Tags</label>
-	    <input type="text" class="form-control" id="tags" placeholder="tags">
+	    <input type="text" class="form-control" id="tags" ng-model="oneTag" placeholder="tags">
+          <a  ng-click="addToTags()" class="btn btn-primary"><i class="fa fa-plus fa-lg"></i></a>
+          <a class="btn btn-warning" ng-repeat="item in product.tags">
+              <span>{{item}}</span>
+              <i ng-click="removeFromTags(item)" class="fa fa-minus"></i>
+          </a>
 	  </div>
 	  <div class="form-group">
 	    <label for="photo">Photo URL</label>
-	    <input type="text" class="form-control" id="photo" placeholder="www.photoUrl.com">
-	  </div>	
+	    <input type="text" class="form-control" id="photo" ng-model="product.photo" placeholder="www.photoUrl.com">
+	  </div>
 	  <div class="form-group">
 	    <label for="description">Description</label>
-	    <input type="text" class="form-control" id="description" placeholder="description">
+	    <input type="text" class="form-control" id="description" ng-model="product.description" placeholder="description">
 	  </div>
 	  <div class="form-group">
 	    <label for="price">Price</label>
-	    <input type="text" class="form-control" id="price" placeholder="$23.22">
+	    <input type="text" class="form-control" id="price" ng-model="product.price" placeholder="$23.22">
 	  </div>
-	  <button type="submit" class="btn btn-default">Submit</button>
+	  <button ng-click="addProduct()" type="submit" class="btn btn-default">Submit</button>
 	</form>
+    {{product}}
 </div>
