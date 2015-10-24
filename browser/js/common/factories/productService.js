@@ -1,19 +1,18 @@
 app.factory('productFactory', ['$http', function($http) {
-    var urlBase = '/api/products/';
+    var urlBase = '/api/product/';
     var productFactory = {};
 
     // Get all products
     productFactory.getAllProducts = function () {
+      console.log("getall products")
       return $http.get(urlBase).then(function(result){
-        return result;
+        return result.data;
       });
     };
 
     // Create a new product
-    productFactory.createProduct = function (user) {
-      return $http.post(urlBase, user).then(function(result){
-        return result;
-      });
+    productFactory.createProduct = function (product) {
+      return $http.post(urlBase, product);
     };
 
     // Get a product by id
