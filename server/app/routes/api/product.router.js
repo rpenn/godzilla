@@ -30,6 +30,7 @@ router.put('/:id', function (req, res, next) {
     Product.findById(req.params.id)
         .then(function (product) {
             product = req.body;
+            _.extend(product, req.body);
             product.save()
                 .then(function (newProduct) {
                     res.json(newProduct);

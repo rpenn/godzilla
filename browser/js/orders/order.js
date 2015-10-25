@@ -8,7 +8,10 @@ app.config(function ($stateProvider) {
         		return orderFactory.getAllOrders();
         	}
         },
-        controller: 'OrderCtrl'
+        controller: 'OrderCtrl',
+        data: {
+            authenticate: true
+        }
     });
 
 });

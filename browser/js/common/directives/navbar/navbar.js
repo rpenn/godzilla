@@ -7,16 +7,25 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
         link: function (scope) {
 
             scope.items = [
-                { label: 'Home', state: 'home' },
-                { label: 'About', state: 'about' },
-                { label: 'Documentation', state: 'docs' },
-                { label: 'Sign Up', state: 'signup'},
-                { label: 'Orders', state: 'orders'},
-                { label: 'Product', state: 'product'},
-                { label: 'Products', state: 'products'},
-                { label: 'Users', state: 'users'},
-                { label: 'Members Only', state: 'membersOnly', auth: true }
+                { label: 'Home', state: 'products.list'},
+                //{ label: 'Home', state: 'home' },
+                //{ label: 'About', state: 'about' },
+                //{ label: 'Documentation', state: 'docs' },
+                //{ label: 'Checkout', state: 'checkout'},
+                //{ label: 'Orders', state: 'orders', auth: true},
+                //{ label: 'Product', state: 'product', auth: true},
+                //{ label: 'Users', state: 'users', auth: true},
+                //{ label: 'Members Only', state: 'membersOnly', auth: true }
             ];
+
+            scope.loginUserDropdown = [
+                {label:'Check Out', state:'checkout'},
+                {label:'Orders', state:'orders'}
+            ];
+
+            scope.status = {
+                isopen: true
+            };
 
             scope.user = null;
 
@@ -25,6 +34,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             };
 
             scope.logout = function () {
+
                 AuthService.logout().then(function () {
                    $state.go('home');
                 });
@@ -39,6 +49,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             var removeUser = function () {
                 scope.user = null;
             };
+
 
             setUser();
 
