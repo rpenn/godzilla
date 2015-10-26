@@ -3,6 +3,8 @@
 // anywhere the User model needs to be used.
 
 require('./address');
+require('./product');
+require('./orderItem');
 require('./order');
 require('./user');
-require('./product');
+

@@ -1,9 +1,7 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
-
 var Address = mongoose.model('Address');
-//var Order = mongoose.model('Order');
 
 var userSchema = new mongoose.Schema({
     firstName: {
@@ -15,12 +13,7 @@ var userSchema = new mongoose.Schema({
     email: {
         type: String
     },
-    address: {
-        type: [Address.schema]
-    },
-    //orders: {
-    //    type: [ Order.schema ]
-    //},
+    address: [Address.schema],
     password: {
         type: String
     },

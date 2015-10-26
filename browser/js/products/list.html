@@ -1,35 +1,36 @@
 <div class="container" ui-sref-active="active">
-	<div class="panel panel-default" ng-repeat="product in products">
-	<!--   <div class="panel-heading">
-	    <h3 class="panel-title">{{product.name}}</h3>
-	  </div> -->
+	<div class="panel panel-default" ng-repeat="orderItem in orderItems">
+
 	  <div class="panel-body">
 	  	<div class="row">
 	  		<div class="col-lg-4">
 	  			 <a href="#" class="thumbnail">
-     			 	<img src="{{product.photo}}">
+     			 	<img src="{{orderItem.product.photo}}">
    				 </a>
 	  		</div>
-	  		<div class="col-lg-8">
-	  			<h3><a href="#" ui-sref="products.detail({id: product._id})">{{product.name}}</a></h3>
-	  			<h1>{{product.price | currency}}</h1>
-	  			<div>{{product.category[0]}}</div>
-	  			<span class="label label-info" ng-repeat="tag in product.tags">{{tag}}</span>
-
+	  		<div class="col-lg-4">
+	  			<h3><a href="#" ui-sref="products.detail({id: orderItem.product._id})">{{orderItem.product.name}}</a></h3>
+	  			<h1>{{orderItem.product.price | currency}}</h1>
+	  			<div>{{orderItem.product.category}}</div>
+	  			<span class="label label-info" ng-repeat="tag in orderItem.product.tags">{{tag}}</span>
+                <input type="number" ng-model="orderItem.quantity" class="form-control">
 	  		</div>
+            <div class="col-lg-4">
+                <a class="btn btn-primary" ng-click="addToCard(orderItem)" ng-disabled="!orderItem.quantity">Add To Card</a>
+            </div>
 	  	</div>
-
-
-
-
-
 	  </div>
 	</div>
-
-<!-- 	{{products}}
-<div>{{product.description}}</div>
- -->
-
+    <script type="text/ng-template" id="myModalAddEmail.html">
+        <div class="modal-header">
+            <h3 class="modal-title">One step to create your own Card.</h3>
+        </div>
+        <div class="modal-body">
+            <input type="email" class="form-control" ng-model="anon.email" placeholder="shopping@nu2u.com">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 </div>
-
-

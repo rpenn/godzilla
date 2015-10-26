@@ -1,13 +1,12 @@
 'use strict';
 var mongoose = require('mongoose');
-var Review = require('./review');
 
 var ProductSchema = new mongoose.Schema({
        name: {
           type: String
        },
        category: {
-	        type: [String]
+	        type: String
        },
        tags: {
           type: [String]
@@ -21,11 +20,8 @@ var ProductSchema = new mongoose.Schema({
        },
        price: {
           type: Number
-       },
-       review: {
-          type: [Review.schema]
        }
 });
 
-module.exports = mongoose.model('Product', ProductSchema);
+mongoose.model('Product', ProductSchema);
 

@@ -4,6 +4,11 @@ app.config(function ($stateProvider) {
         .state('products', {
             url: '/products',
             templateUrl: 'js/products/products.html',
+            resolve: {
+                user: function(AuthService){
+                    return AuthService.getLoggedInUser();
+                }
+            },
             controller: function(){}
         })
         .state('products.list', {
@@ -32,10 +37,76 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('ProductListCtrl', function ($scope, $state, products) {
+app.controller('ProductListCtrl', function ($scope, $state, products, orderFactory, user, $uibModal) {
 
-    $scope.products = products;
+    $scope.orderItems = [];
 
+    angular.forEach(products, function(product, k){
+        $scope.orderItems.push({product: angular.copy(product)});
+    });
+
+    $scope.user = user;
+
+    $scope.cart;
+
+    orderFactory.getCreatedOrder($scope.user._id).then(function(data){
+        $scope.cart = data;
+        console.log($scope.cart);
+    });
+
+    function emailModal(){
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: 'myModalAddEmail.html',
+            controller: 'AddEmailCtrl'
+        });
+
+        modalInstance.result.then(function (email) {
+            $scope.order.email = email;
+        }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+        });
+    }
+
+    $scope.addToCard = function(orderItem){
+
+        //todo, need to consider if user is not created
+
+        if($scope.user !== null ){
+
+            var hasInOrder = false;
+
+            angular.forEach($scope.cart.orderList, function(item, ix){
+                if(item.product === orderItem.product._id || item.product._id === orderItem.product._id){
+                    hasInOrder = true;
+                    item.quantity = item.quantity + orderItem.quantity;
+                }
+            });
+
+            if(!hasInOrder) {
+                $scope.cart.orderList.push(angular.copy(orderItem));
+            }
+
+            orderFactory.addToOrder($scope.cart).then(function(data){
+                //console.log(data);
+            });
+
+        }
+
+    };
+
+
+});
+
+app.controller('AddEmailCtrl', function ($scope, $uibModalInstance) {
+
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.anon.email);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 });
 
 app.controller('ProductAddCtrl', function ($scope, $state, productFactory) {

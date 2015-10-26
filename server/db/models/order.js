@@ -1,18 +1,18 @@
 'use strict';
 var mongoose = require('mongoose');
-var Products = require('./products');
+var OrderItem = mongoose.model('OrderItem');
 
 var OrderSchema = new mongoose.Schema({
-       products: {
-        type: [Products.schema]
-       },
-       subtotal: {
-        type: Number
-       },
-       status: {
+    uid: String,
+    orderList: {
+        type: [OrderItem.schema]
+    },
+    status: {
         type: String,
-        enum: ['Created', 'Processing', 'Cancelled', 'Completed']
-       }
+        enum: ['created', 'processing', 'cancelled', 'completed'],
+        default: 'created'
+    },
+    time : { type : Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

@@ -1,6 +1,31 @@
 app.factory('orderFactory', ['$http', function($http) {
-    var urlBase = '/api/orders/';
+    var urlBase = '/api/orders';
     var orderFactory = {};
+
+
+
+    var currentCart = null;
+
+    //Get order of which state is CREATED
+    //by user id
+    orderFactory.getCreatedOrder = function (userId) {
+        if(orderFactory.currentCart !== null){
+            return $http.get(urlBase+'/created/'+userId).then(function(result){
+                currentCart = result.data;
+                return currentCart;
+            });
+        }
+        else {
+            return currentCart;
+        }
+    };
+
+    //orderFactory.addToOrder = function(cart) {
+    //    return $http.post(urlBase+'/created/'+userId).then(function(result){
+    //        return result.data;
+    //    });
+    //};
+    /////////////////////////MJ above//////////////
 
     // Get all orders
     orderFactory.getAllOrders = function () {
@@ -28,6 +53,13 @@ app.factory('orderFactory', ['$http', function($http) {
       return $http.put(urlBase + '/' + id, orderInfo).then(function(result){
         return result;
       });
+    };
+
+    orderFactory.addToOrder = function () {
+        console.log(currentCart);
+        return $http.put(urlBase + '/', currentCart).then(function(result){
+            return result;
+        });
     };
 
     // Delete an order by id
