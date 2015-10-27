@@ -35,7 +35,7 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
 
 });
 
-app.controller('SignupCtrl', function ($scope, AuthService, userFactory, $state) {
+app.controller('SignupCtrl', function ($scope, AuthService, userFactory) {
 
     $scope.error = null;
 

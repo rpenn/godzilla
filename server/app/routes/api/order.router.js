@@ -2,7 +2,7 @@ var router = require('express').Router();
 var mongoose = require('mongoose');
 var Order = mongoose.model('Order')
 var OrderItem = mongoose.model('OrderItem')
-var restrict = require('../../../services/restrict');
+//var restrict = require('../../../services/restrict');
 
 router.get('/', function (req, res, next){
 	Order.find()
@@ -20,47 +20,42 @@ router.get('/', function (req, res, next){
 // 		.then(null, next);
 // })
 
-router.post('/', function (req, res, next){
+router.post('/', function (req, res){
 	var orderItem = req.body;
 	var orderID = req.sessionID;
-	Item.findById(orderItem.item)
+    OrderItem.findById(orderItem.item)
 		.then(function(item){
-			return item
+			return item;
 		})
 		.then(function(result){
 			checkForExistingOrder(orderID, function (response) 	{
 				var order;
-
-						if (response){
-							order = response;
-							order.orderItems.push({
-								productId: result.id,
-	      			  itemCount: result.itemCount
-							})
-							order.save()
-								.then(function (order){
-									res.sendStatus(201).json(order)
-								})
-						} else {
-						order = new Order({
-							sessionID: orderID,
-							orderItems: {
-								productId: result.id,
-	      			  itemCount: result.itemCount
-	      			}
-						});
-						order.save()
-								.then(function (order){
-									res.sendStatus(201).json(order);
-								})
-						}
-
-
-	       })
-				})
-
-
-})
+                if (response){
+                    order = response;
+                    order.orderItems.push({
+                        productId: result.id,
+	      			    itemCount: result.itemCount
+                    });
+                    order.save()
+                        .then(function (order){
+                            res.sendStatus(201).json(order)
+                        });
+                } else {
+                    order = new Order({
+                        sessionID: orderID,
+                        orderItems: {
+                            productId: result.id,
+	      			        itemCount: result.itemCount
+	      			    }
+                    });
+                    order.save()
+                        .then(function (order){
+                            res.sendStatus(201).json(order);
+                        });
+                }
+	        })
+        })
+});
 
 router.get('/:id', function (req, res, next){
 	Order.findById(req.params.id)
@@ -91,32 +86,19 @@ router.get('/created/:uid', function (req, res, next){
         .then(null, next);
 });
 
-//router.put('/:id', function (req, res, next){
-//	Order.findById(req.params.id)
-//		.then(function (order) {
-//			order = req.body;
-//			order.save()
-//				.then(function (newOrder) {
-//					res.json(newOrder);
-//				})
-//		})
-//		.then(null, next);
-//});
+//this currently is working 10-27, modify cautiously
 router.put('/', function (req, res, next){
     var order = req.body;
-    console.log(order.orderList);
+
     for(var i=0; i<order.orderList.length; i++){
         order.orderList[i] = new OrderItem(order.orderList[i]);
     }
-    console.log(order);
 	Order.findById(order._id)
 		.then(function (doc) {
-            console.log(doc);
 			doc.orderList = order.orderList;
             return doc.save()
 		})
         .then(function (newOrder) {
-            console.log(newOrder);
             res.json(newOrder);
         })
 		.then(null, next);

@@ -16,18 +16,23 @@ var OrderItemSchema = new mongoose.Schema({
     }
 });
 */
+
 var OrderItemSchema = new mongoose.Schema({
-       productId: {
-          type: String,
+       product: {
+          type: [Product.Schema],
           required: true
        },
        size: {
           type: String,
           enum: ['s','m','l','xl']
-        },
+       },
        quantity: {
-          type: Number,
-          default: 0
+           type: Number,
+           default: 0
+       },
+        discount: {
+            type: Number,
+            default: 0
         }
 })
 

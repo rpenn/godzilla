@@ -20,13 +20,6 @@ app.factory('orderFactory', ['$http', function($http) {
         }
     };
 
-    //orderFactory.addToOrder = function(cart) {
-    //    return $http.post(urlBase+'/created/'+userId).then(function(result){
-    //        return result.data;
-    //    });
-    //};
-    /////////////////////////MJ above//////////////
-
     // Get all orders
     orderFactory.getAllOrders = function () {
       return $http.get(urlBase).then(function(result){
@@ -56,7 +49,6 @@ app.factory('orderFactory', ['$http', function($http) {
     };
 
     orderFactory.addToOrder = function () {
-        console.log(currentCart);
         return $http.put(urlBase + '/', currentCart).then(function(result){
             return result;
         });

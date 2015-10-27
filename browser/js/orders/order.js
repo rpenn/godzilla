@@ -18,6 +18,7 @@ app.config(function ($stateProvider) {
 
 app.controller('OrderCtrl', function ($scope, $state, orders) {
 
-    $scope.message = orders;
+    $scope.orders = orders;
+    console.log(orders);
 
 });

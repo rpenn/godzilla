@@ -41,7 +41,7 @@ app.controller('ProductListCtrl', function ($scope, $state, products, orderFacto
 
     $scope.orderItems = [];
 
-    angular.forEach(products, function(product, k){
+    angular.forEach(products, function(product){
         $scope.orderItems.push({product: angular.copy(product)});
     });
 
@@ -54,30 +54,27 @@ app.controller('ProductListCtrl', function ($scope, $state, products, orderFacto
         console.log($scope.cart);
     });
 
-    function emailModal(){
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: 'myModalAddEmail.html',
-            controller: 'AddEmailCtrl'
-        });
-
-        modalInstance.result.then(function (email) {
-            $scope.order.email = email;
-        }, function () {
-            console.log('Modal dismissed at: ' + new Date());
-        });
-    }
+    //function emailModal(){
+    //    var modalInstance = $uibModal.open({
+    //        animation: true,
+    //        templateUrl: 'myModalAddEmail.html',
+    //        controller: 'AddEmailCtrl'
+    //    });
+    //
+    //    modalInstance.result.then(function (email) {
+    //        $scope.order.email = email;
+    //    }, function () {
+    //        console.log('Modal dismissed at: ' + new Date());
+    //    });
+    //}
 
     $scope.addToCard = function(orderItem){
-
         //todo, need to consider if user is not created
-
         if($scope.user !== null ){
-
             var hasInOrder = false;
 
-            angular.forEach($scope.cart.orderList, function(item, ix){
-                if(item.product === orderItem.product._id || item.product._id === orderItem.product._id){
+            angular.forEach($scope.cart.orderList, function(item){
+                if(item.product[0]._id === orderItem.product._id && item.size === orderItem.size){
                     hasInOrder = true;
                     item.quantity = item.quantity + orderItem.quantity;
                 }
@@ -88,11 +85,9 @@ app.controller('ProductListCtrl', function ($scope, $state, products, orderFacto
             }
 
             orderFactory.addToOrder($scope.cart).then(function(data){
-                //console.log(data);
+                console.log(data);
             });
-
         }
-
     };
 
 
