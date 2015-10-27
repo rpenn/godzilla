@@ -15,5 +15,7 @@ module.exports = {
     "clientID": "INSERT_GOOGLE_CLIENTID_HERE",
     "clientSecret": "INSERT_GOOGLE_CLIENT_SECRET_HERE",
     "callbackURL": "INSERT_GOOGLE_CALLBACK_HERE"
-  }
+  },
+  COOKIEMAXAGE: 1 * 24 * 3600 * 1000 //1 day express in ms
+
 };

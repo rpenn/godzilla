@@ -1,19 +1,81 @@
 'use strict';
 var mongoose = require('mongoose');
-var Products = require('./products');
+var OrderItem = mongoose.model('OrderItem');
 
 var OrderSchema = new mongoose.Schema({
-       products: {
-        type: [Products.schema]
+       sessionId: {
+          type: String
        },
-       subtotal: {
-        type: Number
+       userID : {
+          type: String
+       },
+       orderItems: {
+        type: [OrderItem.schema]
        },
        status: {
         type: String,
         enum: ['Created', 'Processing', 'Cancelled', 'Completed']
+       },
+       shippingAddress : {
+          address1: {
+            type: String
+         },
+         address2: {
+            type: String
+         },
+         city: {
+            type: String
+         },
+         state: {
+            type: String
+         },
+         zip: {
+            type: String
+         },
+         country: {
+            type: String
+         }
+       },
+       creditCard: {
+            nameOnCard: {
+            type: String
+            },
+            cardNumber: {
+            type: String
+            },
+            lastFourCard: {
+            type: String
+            },
+            expMonth: {
+            type: String
+            },
+            expYear: {
+            type: Number
+            },
+            billingAddress: {
+              address1: {
+              type: String
+              },
+              address2: {
+              type: String
+              },
+              city: {
+              type: String
+              },
+              state: {
+              type: String
+              },
+              zip: {
+              type: String
+              },
+              country: {
+              type: String
+              }
+      }
+
        }
+
 });
 
-module.exports = mongoose.model('Order', OrderSchema);
+mongoose.model('Order', OrderSchema);
 

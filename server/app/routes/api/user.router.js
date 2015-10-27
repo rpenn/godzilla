@@ -2,6 +2,7 @@ var router = require('express').Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Address = mongoose.model('Address');
+var restrict = require('../../../services/restrict');
 
 router.get('/', function (req, res, next){
 	User.find().exec()
@@ -13,7 +14,7 @@ router.get('/', function (req, res, next){
 
 router.post('/', function (req, res, next){
 
-	
+
 
     if(req.body){
     	for(var x=0; x < req.body.address.length; x++){
