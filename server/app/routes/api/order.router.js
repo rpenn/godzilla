@@ -4,13 +4,19 @@ var Order = mongoose.model('Order')
 var OrderItem = mongoose.model('OrderItem')
 //var restrict = require('../../../services/restrict');
 
+//get all orders
 router.get('/', function (req, res, next){
 	Order.find()
-		.then(function (orders) {
-			res.json(orders);
-		})
-		.then(null, next);
-});
+    .then( fulfilled, error )
+
+function fulfilled (value) {
+      res.json(value).status(200);
+}
+function error (err) {
+     next(err);
+}
+
+})
 
 // router.post('/', function (req, res, next){
 // 	Order.create(req.body)

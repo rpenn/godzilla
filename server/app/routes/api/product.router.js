@@ -3,44 +3,64 @@ var mongoose = require('mongoose');
 var Product = mongoose.model('Product')
 var restrict = require('../../../services/restrict');
 
-router.get('/', restrict.auth, function (req, res, next) {
-    console.log('here!');
+//get all prodcuts
+router.get('/', function (req, res, next) {
     Product.find()
-        .then(function (products) {
-            res.json(products);
-        });
-})
+    .then( fulfilled, error )
 
+function fulfilled (value) {
+      res.json(value).status(200);
+}
+function error (err) {
+     next(err);
+}
+
+});
+
+//create new product
 router.post('/', function (req, res, next) {
-    console.log(req.body);
     Product.create(req.body)
-        .then(function (product) {
-            res.json(product);
-        });
-})
+    .then( fulfilled, error )
 
+function fulfilled (value) {
+      res.json(value).status(200);
+}
+function error (err) {
+     next(err);
+}
+
+});
+
+//get product by id
 router.get('/:id', function (req, res, next) {
     Product.findById(req.params.id)
-        .then(function (product) {
-            res.json(product);
-        })
-        .then(null, next);
-})
+    .then( fulfilled, error )
 
-router.put('/:id', function (req, res, next) {
+function fulfilled (value) {
+      res.json(value).status(200);
+}
+function error (err) {
+     next(err);
+}
+
+});
+
+//edit producy by id
+router.put('/:id', restrict.admin, function (req, res, next) {
     Product.findById(req.params.id)
         .then(function (product) {
-            product = req.body;
-            _.extend(product, req.body);
+            for (var key in product) {
+                product[key] = req.body[key]
+            }
             product.save()
                 .then(function (newProduct) {
-                    res.json(newProduct);
+                    res.status(203).json(newProduct);
                 })
-        })
-        .then(null, next);
-})
+        }, error(err) )
+});
 
-router.delete('/:id', function (req, res, next) {
+//delete product by id
+router.delete('/:id',restrict.admin, function (req, res, next) {
     Product.findById(req.params.id).remove()
         .then(function () {
             res.status(204).end();

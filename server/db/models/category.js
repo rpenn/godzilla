@@ -3,10 +3,15 @@ var mongoose = require('mongoose');
 
 var CategorySchema = new mongoose.Schema({
   category: {
-    type: String,
-    unique: true
+    main: {
+            type: String,
+            unique: true
+          },
+    subCat: {
+              type: [String],
+              unique: true
+            }
   }
-
 });
 
 mongoose.model('Categories', CategorySchema);
