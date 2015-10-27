@@ -9,12 +9,15 @@ app.config(function ($stateProvider) {
             },
 
         },
-        controller: 'UsersCtrl'
+        controller: 'UsersCtrl',
+        data: {
+            authenticate: true
+        }
     });
 
 });
 
 app.controller('UsersCtrl', function ($scope, AuthService, $state, users) {
     $scope.users = users;
-   
+
 });

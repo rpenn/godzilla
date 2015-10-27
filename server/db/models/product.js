@@ -4,41 +4,48 @@ var Review = mongoose.model('Review')
 
 var ProductSchema = new mongoose.Schema({
        brand: {
-          type: String,
+           type: String,
        },
        name: {
-          type: String
+           type: String
        },
-       category: {
-          main: {
-                  type: String,
-                  unique: true
-                },
-          subCat: {
-                    type: String,
-                    unique: true
-                  }
-       },
+       category : String,
+      
+      // category: {
+        //  main: {
+            //      type: String,
+          //        unique: true
+           //     },
+          //subCat: {
+              //      type: String,
+            //        unique: true
+              //    }
+       //},
+       //cat1: String,
+//	cat2:String
        tags: {
-          type: [String]
+           type: [String]
        },
        photo: {
-          type: String,
-          default: 'http://tattoolicious.com/assets/uploads/images/T-Shirt.jpg'
+           type: String,
+           default: 'http://tattoolicious.com/assets/uploads/images/T-Shirt.jpg'
        },
        availableSizes: {
-          type: [String],
-          enum: ['s','m','l','xl']
+           type: [String],
+           enum: ['s','m','l','xl']
        },
        description: {
-          type: String
+           type: String
        },
        price: {
-          type: Number,
-          default: 0,
-          required: true
+           type: Number,
+           default: 0,
+           required: true
        },
-       reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Review"}]
+       reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Review"}],
+       modifiedDate: {
+           type : Date, default: Date.now
+       }
 });
 
 ProductSchema.methods.findReviews = function findReviews(){

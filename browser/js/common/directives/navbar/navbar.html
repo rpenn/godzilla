@@ -9,9 +9,20 @@
             </li>
         </ul>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
+        <button ng-show="!user" ui-sref="signup" class="btn  login-button">Signup</button>
         <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
+            <span uib-dropdown on-toggle="toggled(open)">
+                <a href id="simple-dropdown" uib-dropdown-toggle>
+                    Hello, {{ user.email }}!
+                </a>
+                <ul class="uib-dropdown-menu" aria-labelledby="simple-dropdown">
+                    <li ng-repeat="choice in loginUserDropdown">
+                        <a ui-sref-active="active" ui-sref="{{ choice.state }}">{{ choice.label }}</a>
+                    </li>
+                </ul>
+            </span>
+            <a class="btn btn-info" ng-click="logout()">Logout</a>
         </div>
     </div>
 </nav>
+

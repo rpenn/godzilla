@@ -3,89 +3,85 @@ var mongoose = require('mongoose');
 var OrderItem = mongoose.model('OrderItem');
 
 var OrderSchema = new mongoose.Schema({
-       sessionId: {
-          type: String
-       },
-       timestamp: {
-          type: Date,
-          defaule: Date.now,
-          required: true
-       },
-       userID : {
-          type: String
-       },
-       orderItems: {
+    //uid: String,
+    //orderList: {
+    //    type: [OrderItem.schema]
+    //},
+
+    ModifiedDate : { type : Date, default: Date.now },
+    sid: {
+        type: String
+    },
+    uid : {
+        type: String
+    },
+    //orderItems: {
+    //    type: [OrderItem.schema]
+    //},
+    orderList: {
         type: [OrderItem.schema]
-       },
-       status: {
+    },
+    status: {
         type: String,
-        enum: ['Created', 'Processing', 'Cancelled', 'Completed']
-       },
-       totalCost: {
-        type: Number,
-        min: 0,
-        default: 0,
-        required: true
-       },
-       shippingAddress : {
-          address1: {
+        enum: ['created', 'processing', 'cancelled', 'completed']
+    },
+    shippingAddress : {
+        address1: {
             type: String
-         },
-         address2: {
+        },
+        address2: {
             type: String
-         },
-         city: {
+        },
+        city: {
             type: String
-         },
-         state: {
+        },
+        state: {
             type: String
-         },
-         zip: {
+        },
+        zip: {
             type: String
-         },
-         country: {
+        },
+        country: {
             type: String
-         }
-       },
-       creditCard: {
-            nameOnCard: {
+        }
+    },
+    creditCard: {
+        nameOnCard: {
             type: String
-            },
-            cardNumber: {
+        },
+        cardNumber: {
             type: String
-            },
-            lastFourCard: {
+        },
+        lastFourCard: {
             type: String
-            },
-            expMonth: {
+        },
+        expMonth: {
             type: String
-            },
-            expYear: {
+        },
+        expYear: {
             type: Number
+        },
+        billingAddress: {
+            address1: {
+                type: String
             },
-            billingAddress: {
-              address1: {
-              type: String
-              },
-              address2: {
-              type: String
-              },
-              city: {
-              type: String
-              },
-              state: {
-              type: String
-              },
-              zip: {
-              type: String
-              },
-              country: {
-              type: String
-              }
-      }
-
-       }
-
+            address2: {
+                type: String
+            },
+            city: {
+                type: String
+            },
+            state: {
+                type: String
+            },
+            zip: {
+                type: String
+            },
+            country: {
+                type: String
+            }
+        }
+    }
 });
 
 mongoose.model('Order', OrderSchema);
