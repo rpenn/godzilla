@@ -4,7 +4,9 @@ module.exports = router;
 var _ = require('lodash');
 
 var ensureAuthenticated = function (req, res, next) {
+    console.log(req);
     if (req.isAuthenticated()) {
+
         next();
     } else {
         res.status(401).end();

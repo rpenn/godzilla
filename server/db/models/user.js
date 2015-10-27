@@ -2,6 +2,8 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Address = mongoose.model('Address');
+var CreditCard = mongoose.model('CreditCard');
+//var Order = mongoose.model('Order');
 
 var userSchema = new mongoose.Schema({
     firstName: {
@@ -13,12 +15,21 @@ var userSchema = new mongoose.Schema({
     email: {
         type: String
     },
-    address: [Address.schema],
+    addressesOnFile: {
+        type: [Address.schema]
+    },
+    creditCardsOnFile: {
+        type: [CreditCard.schema]
+    },
+    orderHistory : {
+        type: [String]
+    },
     password: {
         type: String
     },
-    isAdmin: {
-        type: Boolean
+    group: {
+        type: String,
+        enum: ['member', 'admin']
     },
     salt: {
         type: String

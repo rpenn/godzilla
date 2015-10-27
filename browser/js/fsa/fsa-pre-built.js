@@ -51,9 +51,11 @@
     app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q) {
 
         function onSuccessfulLogin(response) {
+
             var data = response.data;
             Session.create(data.id, data.user);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            console.log(data.user)
             return data.user;
         }
 
@@ -61,6 +63,10 @@
         // authenticated user is currently registered.
         this.isAuthenticated = function () {
             return !!Session.user;
+        };
+
+        this.isAuthenticatedAndAdmin = function () {
+            return Session.user.group === "admin";
         };
 
         this.getLoggedInUser = function (fromServer) {

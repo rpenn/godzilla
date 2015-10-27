@@ -19,6 +19,9 @@ var AddressSchema = new mongoose.Schema({
        },
        country: {
           type: String
+       },
+       default: {
+          type: Boolean
        }
 });
 

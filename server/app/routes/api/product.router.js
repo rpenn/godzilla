@@ -1,8 +1,9 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
-var Product = mongoose.model('Product');
+var Product = mongoose.model('Product')
+var restrict = require('../../../services/restrict');
 
-router.get('/', function (req, res, next) {
+router.get('/', restrict.auth, function (req, res, next) {
     console.log('here!');
     Product.find()
         .then(function (products) {
