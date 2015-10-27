@@ -1,9 +1,17 @@
 <div class='container'>
-	<form name="productForm">
-	  <div class="form-group">
-	    <label for="name">Name</label>
-	    <input type="text" class="form-control" id="name" ng-model="product.name" placeholder="Product Name">
-	  </div>
+    <div class="form-group">
+        <label for="name">Brand</label>
+        <input type="text" class="form-control" id="brand" ng-model="product.brand" placeholder="Product Brand">
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" ng-model="product.name" placeholder="Product Name">
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="text" class="form-control" id="price" ng-model="product.price" placeholder="$23.22">
+    </div>
+
 	  <div class="form-group">
 	    <label for="category">Category</label>
 	    <input type="text" class="form-control" id="category"  ng-model="product.category" placeholder="category">
@@ -26,10 +34,7 @@
 	    <label for="description">Description</label>
 	    <input type="text" class="form-control" id="description" ng-model="product.description" placeholder="description">
 	  </div>
-	  <div class="form-group">
-	    <label for="price">Price</label>
-	    <input type="text" class="form-control" id="price" ng-model="product.price" placeholder="$23.22">
-	  </div>
+
 	  <button ng-click="addProduct()" type="submit" class="btn btn-default">Submit</button>
 	</form>
     {{product}}

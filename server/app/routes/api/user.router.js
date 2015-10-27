@@ -14,23 +14,20 @@ router.get('/', function (req, res, next){
 
 router.post('/', function (req, res, next){
 
+    if(req.body) {
+        for (var x = 0; x < req.body.address.length; x++) {
+            req.body.address[x] = new Address(req.body.address[x]);
+        }
 
-
-    if(req.body){
-    	for(var x=0; x < req.body.address.length; x++){
-    		req.body.address[x] = new Address(req.body.address[x]);
-    	}
-
-       var user = new User(req.body);
-
-        console.log(user);
+        var user = new User(req.body);
         user.save()
-            .then(function (user){
+            .then(function (user) {
                 res.status(201).json(user)
-            });
+            })
+            .then(null, next);
     }
 
-})
+});
 
 router.get('/:id', function (req, res, next){
 	User.findById(req.params.id)
@@ -38,9 +35,13 @@ router.get('/:id', function (req, res, next){
 			res.json(user);
 		})
 		.then(null, next);
-})
+});
 
 router.put('/:id', function (req, res, next){
+
+    for(var x=0; x < req.body.address.length; x++){
+        req.body.address[x] = new Address(req.body.address[x]);
+    }
 	User.findById(req.params.id)
 		.then(function (user) {
 			user = req.body;

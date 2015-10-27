@@ -1,3 +1,9 @@
 <div>
-    this is order {{message}}
+    <div class="well" ng-repeat="order in orders">
+        <div>Last Change: {{order.ModifiedDate}}</div>
+        <div ng-repeat="orderItem in order.orderList">
+            {{orderItem.product[0].brand}} - {{orderItem.product[0].name}} - {{orderItem.size}} - {{orderItem.quantity}}
+        </div>
+    </div>
 </div>
+

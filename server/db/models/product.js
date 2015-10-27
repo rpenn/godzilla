@@ -4,35 +4,38 @@ var Review = mongoose.model('Review')
 
 var ProductSchema = new mongoose.Schema({
        brand: {
-          type: String,
+           type: String,
        },
        name: {
-          type: String
+           type: String
        },
        category: {
-	        type: String
+           type: String
        },
        tags: {
-          type: [String]
+           type: [String]
        },
        photo: {
-          type: String,
-          default: 'http://tattoolicious.com/assets/uploads/images/T-Shirt.jpg'
+           type: String,
+           default: 'http://tattoolicious.com/assets/uploads/images/T-Shirt.jpg'
        },
        availableSizes: {
-          type: [String],
-          enum: ['s','m','l','xl']
+           type: [String],
+           enum: ['s','m','l','xl']
        },
        description: {
-          type: String
+           type: String
        },
        price: {
-          type: Number,
-          default: 0,
-          required: true
+           type: Number,
+           default: 0,
+           required: true
        },
        reviews: {
-          type: [Review.schema]
+           type: [Review.schema]
+       },
+       modifiedDate: {
+           type : Date, default: Date.now
        }
 });
 

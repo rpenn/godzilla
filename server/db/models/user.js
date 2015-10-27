@@ -1,7 +1,6 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
-
 var Address = mongoose.model('Address');
 var CreditCard = mongoose.model('CreditCard');
 //var Order = mongoose.model('Order');

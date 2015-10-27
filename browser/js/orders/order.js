@@ -8,13 +8,17 @@ app.config(function ($stateProvider) {
         		return orderFactory.getAllOrders();
         	}
         },
-        controller: 'OrderCtrl'
+        controller: 'OrderCtrl',
+        data: {
+            authenticate: true
+        }
     });
 
 });
 
 app.controller('OrderCtrl', function ($scope, $state, orders) {
 
-    $scope.message = orders;
+    $scope.orders = orders;
+    console.log(orders);
 
 });
