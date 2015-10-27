@@ -21,9 +21,14 @@ module.exports = function (app) {
     // mongoose. Check out the sessions collection in your MongoCLI.
     app.use(session({
         secret: app.getValue('env').SESSION_SECRET,
+        milad: "test",
         store: new MongoStore({mongooseConnection: mongoose.connection}),
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: {
+            maxAge: app.getValue('env').COOKIEMAXAGE,
+            httpOnly: true
+        }
     }));
 
     // Initialize passport and also allow it to read
@@ -63,5 +68,7 @@ module.exports = function (app) {
     ENABLED_AUTH_STRATEGIES.forEach(function (strategyName) {
         require(path.join(__dirname, strategyName))(app);
     });
+
+
 
 };

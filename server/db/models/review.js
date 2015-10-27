@@ -3,21 +3,18 @@ var mongoose = require('mongoose');
 
 
 var ReviewSchema = new mongoose.Schema({
-       user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User'
+       userId: {
+          type: String
        },
        starRating: {
           type: Number,
           min: 1,
           max: 5
        },
-       comments: {
+       Comment: {
           type: String
        }
-
-
 });
 
-module.exports = mongoose.model('review', ReviewSchema);
+mongoose.model('Review', ReviewSchema);
 
