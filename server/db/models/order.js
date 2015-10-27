@@ -6,6 +6,11 @@ var OrderSchema = new mongoose.Schema({
        sessionId: {
           type: String
        },
+       timestamp: {
+          type: Date,
+          defaule: Date.now,
+          required: true
+       },
        userID : {
           type: String
        },
@@ -15,6 +20,12 @@ var OrderSchema = new mongoose.Schema({
        status: {
         type: String,
         enum: ['Created', 'Processing', 'Cancelled', 'Completed']
+       },
+       totalCost: {
+        type: Number,
+        min: 0,
+        default: 0,
+        required: true
        },
        shippingAddress : {
           address1: {

@@ -22,9 +22,7 @@ var userSchema = new mongoose.Schema({
     creditCardsOnFile: {
         type: [CreditCard.schema]
     },
-    orderHistory : {
-        type: [String]
-    },
+    orderHistory : [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
     password: {
         type: String
     },

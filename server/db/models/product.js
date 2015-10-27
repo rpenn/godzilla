@@ -10,7 +10,14 @@ var ProductSchema = new mongoose.Schema({
           type: String
        },
        category: {
-	        type: String
+          main: {
+                  type: String,
+                  unique: true
+                },
+          subCat: {
+                    type: String,
+                    unique: true
+                  }
        },
        tags: {
           type: [String]
@@ -31,10 +38,23 @@ var ProductSchema = new mongoose.Schema({
           default: 0,
           required: true
        },
-       reviews: {
-          type: [Review.schema]
-       }
+       reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Review"}]
 });
+
+ProductSchema.methods.findReviews = function findReviews(){
+  var product = this;
+
+  var reviewFinds = [];
+
+  product.reviews.forEach(function(reviewId){
+    reviewFinds.push
+      (
+        Review.findOne( {"_id": reviewID} ).exec()
+      );
+  });
+
+  return reviewFinds
+}
 
 mongoose.model('Product', ProductSchema);
 

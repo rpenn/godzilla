@@ -2,9 +2,9 @@
 var mongoose = require('mongoose');
 
 var OrderItemSchema = new mongoose.Schema({
-       productId: {
-          type: String,
-          required: true
+       product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Product'
        },
        size: {
           type: String,

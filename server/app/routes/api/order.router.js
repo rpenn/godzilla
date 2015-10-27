@@ -5,12 +5,18 @@ var OrderItem = mongoose.model('OrderItem')
 var restrict = require('../../../services/restrict');
 
 
+//get all orders
 router.get('/', function (req, res, next){
 	Order.find()
-		.then(function (orders) {
-			res.json(orders);
-		})
-		.then(null, next);
+    .then( fulfilled, error )
+
+function fulfilled (value) {
+      res.json(value).status(200);
+}
+function error (err) {
+     next(err);
+}
+
 })
 
 // router.post('/', function (req, res, next){
@@ -75,7 +81,9 @@ router.get('/:id', function (req, res, next){
 router.put('/:id', function (req, res, next){
 	Order.findById(req.params.id)
 		.then(function (order) {
-			order = req.body;
+	    for (var key in order) {
+	        order[key] = req.body[key]
+	    }
 			order.save()
 				.then(function (newOrder) {
 					res.json(newOrder);
