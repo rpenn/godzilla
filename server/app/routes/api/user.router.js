@@ -19,7 +19,7 @@ function error (err) {
 });
 
 //create a new user
-router.post('/', function (req, res, next){
+router.post('/', restrict.admin, function (req, res, next){
     if(req.body){
     	for(var x=0; x < req.body.address.length; x++){
     		req.body.address[x] = new Address(req.body.address[x]);
@@ -36,6 +36,7 @@ router.post('/', function (req, res, next){
 //get by id
 router.get('/:id', function (req, res, next){
   User.findById(req.params.id)
+  .populate('orderHistory')
     .then( fulfilled, error )
 
 function fulfilled (value) {
@@ -79,7 +80,7 @@ router.put('/:id', function (req, res, next){
 })
 
 //delete by id
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', restrict.admin, function (req, res, next) {
 	User.findOneAndRemove( {_id: req.params.id} )
 		.then(function() {
 			res.status(204).end();

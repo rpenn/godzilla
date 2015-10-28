@@ -7,6 +7,8 @@ var OrderItem = mongoose.model('OrderItem')
 //get all orders
 router.get('/', function (req, res, next){
 	Order.find()
+    .populate('orderList.product')
+    .exec()
     .then( fulfilled, error )
 
     function fulfilled (value) {
@@ -17,6 +19,29 @@ router.get('/', function (req, res, next){
     }
 
 })
+
+//get order by ID
+router.get('/get-order/:id', function (req, res, next){
+    Order.findById(req.params.id)
+        .populate('orderList.product')
+        .exec()
+        .then(function (order) {
+            res.json(order);
+        })
+        .then(null, next);
+});
+
+//get current cart
+router.get('/get-order/:id', function (req, res, next){
+    Order.findById( {'user': req.params.id, 'status': 'created'} )
+        .populate('orderList.product')
+        .exec()
+        .then(function (order) {
+            res.json(order);
+        })
+        .then(null, next);
+});
+
 
 router.post('/add-to-order/guest', function (req, res, next) {
     Order.find({sid: req.sessionID})
@@ -32,7 +57,7 @@ router.post('/add-to-order/guest', function (req, res, next) {
                 doc[0].orderList.push(req.body)
                 doc[0].save()
                 .then(function(doc) {
-                    res.json(doc);                    
+                    res.json(doc);
                 })
             }
             else {
@@ -42,55 +67,12 @@ router.post('/add-to-order/guest', function (req, res, next) {
         .then(null, next);
 });
 
+router.put('/remove/:orderId/:')
+
 router.post('checkout/guest', function (req, res, next) {
 
 })
 
-router.post('checkout/')
-// router.post('/', function (req, res){
-// 	var orderItem = req.body;
-// 	var orderID = req.sessionID;
-//     OrderItem.findById(orderItem.item)
-// 		.then(function(item){
-// 			return item;
-// 		})
-// 		.then(function(result){
-// 			checkForExistingOrder(orderID, function (response) 	{
-// 				var order;
-//                 if (response){
-//                     order = response;
-//                     order.orderItems.push({
-//                         productId: result.id,
-// 	      			    itemCount: result.itemCount
-//                     });
-//                     order.save()
-//                         .then(function (order){
-//                             res.sendStatus(201).json(order)
-//                         });
-//                 } else {
-//                     order = new Order({
-//                         sessionID: orderID,
-//                         orderItems: {
-//                             productId: result.id,
-// 	      			        itemCount: result.itemCount
-// 	      			    }
-//                     });
-//                     order.save()
-//                         .then(function (order){
-//                             res.sendStatus(201).json(order);
-//                         });
-//                 }
-// 	        })
-//         })
-// });
-
-router.get('/:id', function (req, res, next){
-	Order.findById(req.params.id)
-		.then(function (order) {
-			res.json(order);
-		})
-		.then(null, next);
-});
 
 router.get('/created/:uid', function (req, res, next){
     Order.find({uid: req.params.uid, status: 'created'})
@@ -109,7 +91,7 @@ router.get('/created/:uid', function (req, res, next){
                     var newOrderList = doc[0].orderList.concat(order.orderList);
                     doc[0].orderList = newOrderList;
                     res.json(doc[0]);
-                    //* untested! 
+                    //* untested!
                 })
             }
             else {
@@ -120,7 +102,7 @@ router.get('/created/:uid', function (req, res, next){
 });
 
 //this currently is working 10-27, modify cautiously
-router.put('/', function (req, res, next){
+router.put('/edit-order', function (req, res, next){
     var order = req.body;
 
     for(var i=0; i<order.orderList.length; i++){
@@ -137,7 +119,7 @@ router.put('/', function (req, res, next){
 		.then(null, next);
 });
 
-router.delete('/:id', function (req, res, next) {
+router.delete('/delete/:id', function (req, res, next) {
 	Order.findById(req.params.id).remove()
 		.then(function() {
 			res.status(204).end();
@@ -145,11 +127,4 @@ router.delete('/:id', function (req, res, next) {
 		.then(null, next);
 });
 
-function checkForExistingOrder(orderID, cb) {
-    Order.findById(orderID, function (err, order) {
-    	if (err) { return next(err) }
-
-    		return order
-    }).then(cb);
-}
 module.exports = router;

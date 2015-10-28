@@ -18,7 +18,7 @@ function error (err) {
 });
 
 //create new product
-router.post('/', function (req, res, next) {
+router.post('/', restrict.admin, function (req, res, next) {
     Product.create(req.body)
     .then( fulfilled, error )
 

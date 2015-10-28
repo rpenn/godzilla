@@ -9,20 +9,9 @@ var ProductSchema = new mongoose.Schema({
        name: {
            type: String
        },
-       category : String,
-      
-      // category: {
-        //  main: {
-            //      type: String,
-          //        unique: true
-           //     },
-          //subCat: {
-              //      type: String,
-            //        unique: true
-              //    }
-       //},
-       //cat1: String,
-//	cat2:String
+       cat1: String,
+       cat2: String,
+       cat3: String,
        tags: {
            type: [String]
        },
