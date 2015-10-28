@@ -9,59 +9,75 @@ router.get('/', function (req, res, next){
 	Order.find()
     .then( fulfilled, error )
 
-function fulfilled (value) {
-      res.json(value).status(200);
-}
-function error (err) {
-     next(err);
-}
+    function fulfilled (value) {
+          res.json(value).status(200);
+    }
+    function error (err) {
+         next(err);
+    }
 
 })
 
-// router.post('/', function (req, res, next){
-// 	Order.create(req.body)
-// 		.then(function (order){
-// 			res.sendStatus(201).json(order)
-// 		})
-// 		.then(null, next);
-// })
-
-router.post('/', function (req, res){
-	var orderItem = req.body;
-	var orderID = req.sessionID;
-    OrderItem.findById(orderItem.item)
-		.then(function(item){
-			return item;
-		})
-		.then(function(result){
-			checkForExistingOrder(orderID, function (response) 	{
-				var order;
-                if (response){
-                    order = response;
-                    order.orderItems.push({
-                        productId: result.id,
-	      			    itemCount: result.itemCount
-                    });
-                    order.save()
-                        .then(function (order){
-                            res.sendStatus(201).json(order)
-                        });
-                } else {
-                    order = new Order({
-                        sessionID: orderID,
-                        orderItems: {
-                            productId: result.id,
-	      			        itemCount: result.itemCount
-	      			    }
-                    });
-                    order.save()
-                        .then(function (order){
-                            res.sendStatus(201).json(order);
-                        });
-                }
-	        })
+router.post('/add-to-order/guest', function (req, res, next) {
+    Order.find({sid: req.sessionID})
+        .then(function (doc) {
+            if(doc.length === 0){
+                req.body.sid = req.sessionID;
+                Order.create(req.body).then(function(data){
+                    res.json(data);
+                });
+            }
+            else if(doc.length === 1){
+                console.log(doc[0].orderList);
+                doc[0].orderList.push(req.body)
+                doc[0].save()
+                .then(function(doc) {
+                    res.json(doc);                    
+                })
+            }
+            else {
+                next();
+            }
         })
+        .then(null, next);
 });
+
+// router.post('/', function (req, res){
+// 	var orderItem = req.body;
+// 	var orderID = req.sessionID;
+//     OrderItem.findById(orderItem.item)
+// 		.then(function(item){
+// 			return item;
+// 		})
+// 		.then(function(result){
+// 			checkForExistingOrder(orderID, function (response) 	{
+// 				var order;
+//                 if (response){
+//                     order = response;
+//                     order.orderItems.push({
+//                         productId: result.id,
+// 	      			    itemCount: result.itemCount
+//                     });
+//                     order.save()
+//                         .then(function (order){
+//                             res.sendStatus(201).json(order)
+//                         });
+//                 } else {
+//                     order = new Order({
+//                         sessionID: orderID,
+//                         orderItems: {
+//                             productId: result.id,
+// 	      			        itemCount: result.itemCount
+// 	      			    }
+//                     });
+//                     order.save()
+//                         .then(function (order){
+//                             res.sendStatus(201).json(order);
+//                         });
+//                 }
+// 	        })
+//         })
+// });
 
 router.get('/:id', function (req, res, next){
 	Order.findById(req.params.id)
@@ -80,7 +96,7 @@ router.get('/created/:uid', function (req, res, next){
                 });
             }
             else if(doc.length > 1){
-                throw new Error('There are more than one cart');
+                throw new Error('There is more than one cart');
             }
             else if(doc.length === 1){
                 res.json(doc[0]);
