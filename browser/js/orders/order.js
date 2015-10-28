@@ -18,7 +18,7 @@ app.config(function ($stateProvider) {
 
 app.controller('OrderCtrl', function ($scope, $state, orders) {
 
-    $scope.orders = orders;
-    console.log(orders);
-
+    $scope.orders = orders.filter(function(order){
+        return order.status !== 'created';
+    });
 });
