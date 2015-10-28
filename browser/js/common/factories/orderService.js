@@ -8,9 +8,9 @@ app.factory('orderFactory', ['$http', function($http) {
 
     //Get order of which state is CREATED
     //by user id
-    orderFactory.getCreatedOrder = function (userId) {
+    orderFactory.getCreatedOrder = function (uid) {
         if(orderFactory.currentCart !== null){
-            return $http.get(urlBase+'/created/'+userId).then(function(result){
+            return $http.get(urlBase+'/created/'+uid).then(function(result){
                 currentCart = result.data;
                 return currentCart;
             });
@@ -21,8 +21,8 @@ app.factory('orderFactory', ['$http', function($http) {
     };
 
     // Get all orders
-    orderFactory.getAllOrders = function () {
-      return $http.get(urlBase).then(function(result){
+    orderFactory.getAllOrders = function (uid) {
+      return $http.get(urlBase + '/' + uid).then(function(result){
         return result.data;
       });
     };

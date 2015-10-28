@@ -18,7 +18,7 @@ app.factory('productFactory', ['$http', function($http) {
     // Get a product by id
     productFactory.getProduct = function (id) {
       return $http.get(urlBase + '/' + id).then(function(result){
-        return result;
+        return result.data;
       });
     };
 

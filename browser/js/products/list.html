@@ -1,6 +1,5 @@
 <div class="container" ui-sref-active="active">
 	<div class="panel panel-default" ng-repeat="orderItem in orderItems">
-
 	  <div class="panel-body">
 	  	<div class="row">
 	  		<div class="col-lg-4">
@@ -30,7 +29,7 @@
 	  		</div>
             <div class="col-lg-4">
                 <div class="btn-group">
-                    <a class="btn btn-primary" ng-click="addToCard(orderItem)" ng-disabled="!orderItem.quantity">Add To Card</a>
+                    <a class="btn btn-primary" ng-click="addToCart(orderItem)" ng-disabled="!orderItem.quantity">Add To Card</a>
                 </div>
                 <div class="well">
                     <label>Description: </label>

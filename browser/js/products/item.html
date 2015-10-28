@@ -1,3 +1,54 @@
-<div>
-    {{id}}
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <a href="#" class="thumbnail">
+                        <img src="{{orderItem.product.photo}}">
+                    </a>
+                </div>
+                <div class="col-lg-4">
+                    <h2><a href="#">{{orderItem.product.brand}}</a></h2>
+                    <h3><a href="#" ui-sref="products.detail({id: orderItem.product._id})">{{orderItem.product.name}}</a></h3>
+                    <h1>{{orderItem.product.price | currency}}</h1>
+                    <div>{{orderItem.product.category}}</div>
+                    <span class="label label-info" ng-repeat="tag in orderItem.product.tags">{{tag}}</span>
+                    <div>
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" ng-model="orderItem.quantity" class="form-control" style="width:90px">
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Size</label>
+                        <select id="size" ng-model="orderItem.size" ng-init="orderItem.size = 's'">
+                            <option value="s">S</option>
+                            <option value="m">M</option>
+                            <option value="l">L</option>
+                            <option value="xl">XL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" ng-click="addToCart(orderItem)" ng-disabled="!orderItem.quantity">Add To Card</a>
+                    </div>
+                    <div class="well">
+                        <label>Description: </label>
+                        <div>{{orderItem.product.description}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="myModalAddEmail.html">
+        <div class="modal-header">
+            <h3 class="modal-title">One step to create your own Card.</h3>
+        </div>
+        <div class="modal-body">
+            <input type="email" class="form-control" ng-model="anon.email" placeholder="shopping@nu2u.com">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 </div>

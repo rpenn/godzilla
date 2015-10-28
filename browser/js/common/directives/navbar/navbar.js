@@ -7,7 +7,10 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
         link: function (scope) {
 
             scope.items = [
-                { label: 'Home', state: 'products.list'},
+                { label: 'CLOTHING', category: 'clothing', state: 'products.category({cat1: "clothing"})'},
+                { label: 'SHOES', category: 'shoes', state: 'products.category({cat1: "shoes"})'},
+                { label: 'ACCESSORIES', category: 'accessories', state: 'products.category({cat1: "accessories"})'},
+                { label: 'GROOMING', category: 'grooming', state: 'products.category({cat1: "grooming"})'},
                 //{ label: 'Home', state: 'home' },
                 //{ label: 'About', state: 'about' },
                 //{ label: 'Documentation', state: 'docs' },
