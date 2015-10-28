@@ -42,6 +42,11 @@ router.post('/add-to-order/guest', function (req, res, next) {
         .then(null, next);
 });
 
+router.post('checkout/guest', function (req, res, next) {
+
+})
+
+router.post('checkout/')
 // router.post('/', function (req, res){
 // 	var orderItem = req.body;
 // 	var orderID = req.sessionID;
@@ -99,7 +104,13 @@ router.get('/created/:uid', function (req, res, next){
                 throw new Error('There is more than one cart');
             }
             else if(doc.length === 1){
-                res.json(doc[0]);
+                Order.findOne({sid: req.sessionID})
+                .then(function(order){
+                    var newOrderList = doc[0].orderList.concat(order.orderList);
+                    doc[0].orderList = newOrderList;
+                    res.json(doc[0]);
+                    //* untested! 
+                })
             }
             else {
                 next();
