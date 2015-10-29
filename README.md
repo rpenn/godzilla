@@ -18,4 +18,4 @@ Creating a new branch:
 
 5. `git push origin <branch name>`
 
-6. `git branch –set-upstream-to=origin/<branch name>`
+6. `git branch --set-upstream-to=origin/<branch name>`
