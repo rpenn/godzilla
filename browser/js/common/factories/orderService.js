@@ -5,17 +5,16 @@ app.factory('orderFactory', ['$http', function($http) {
     var currentCart = null;
 
     //Get order of which state is CREATED
-    //by user id
+    ////by user id
     orderFactory.getCreatedOrder = function (uid) {
-        if(currentCart === null){
-            return $http.get(urlBase+'/created/'+uid).then(function(result){
-                currentCart = result.data;
-                return currentCart;
-            });
+        console.log('getCreated ordr' ,uid);
+        if(uid){
+            return $http.get(urlBase+'/'+uid+'/created');
         }
         else {
-            return currentCart;
+            return $http.get(urlBase+'/guest/created');
         }
+
     };
 
     //pass uid, on the other end, api check uid, if no uid, then create order with session
@@ -24,6 +23,10 @@ app.factory('orderFactory', ['$http', function($http) {
             .then(function(result){
                 return result.data;
             });
+    };
+
+    orderFactory.updateOrderItem = function(uid, orderItem){
+        return $http.put(urlBase+'/updateorderitem', {uid: uid, orderItem: orderItem});
     };
 
     // Get all orders

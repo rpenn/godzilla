@@ -1,12 +1,14 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
-var Order = mongoose.model('Order')
-var OrderItem = mongoose.model('OrderItem')
+var Order = mongoose.model('Order');
+var OrderItem = mongoose.model('OrderItem');
+var _ = require('lodash');
 //var restrict = require('../../../services/restrict');
 
 //get all orders
-router.get('/', function (req, res, next){
-	Order.find()
+//MJS new route
+router.get('/:uid', function (req, res, next){
+	Order.find({uid: req.params.uid})
     .populate('orderList.product')
     .exec()
     .then( fulfilled, error )
@@ -18,7 +20,40 @@ router.get('/', function (req, res, next){
          next(err);
     }
 
-})
+});
+
+//MJS new route
+router.get('/guest/created', function(req, res, next){
+    Order.findOne({sid: req.sessionID, 'status': 'created'})
+        .populate('orderList.product')
+        .exec()
+        .then( fulfilled, error )
+
+    function fulfilled (value) {
+        res.json(value);
+    }
+    function error (err) {
+        next(err);
+    }
+});
+
+//MJS new route
+router.get('/:uid/created', function(req, res, next){
+    Order.findOne({uid: req.params.uid, 'status': 'created'})
+        .populate('orderList.product')
+        .exec()
+        .then( fulfilled, error )
+
+    function fulfilled (value) {
+        res.json(value);
+    }
+    function error (err) {
+        next(err);
+    }
+});
+
+
+
 
 //get order by ID
 router.get('/get-order/:id', function (req, res, next){
@@ -70,6 +105,7 @@ router.post('/add-to-order/guest', function (req, res, next) {
 router.put('/remove/:orderId/:')
 
 //ACCOMPLISHED No Need to change
+///MJS new router for adding new product
 router.post('/addtoorder', function (req, res, next) {
     var body = req.body;
     var uid = body.uid;
@@ -106,7 +142,6 @@ router.post('/addtoorder', function (req, res, next) {
     else {
         Order.findOne({'sid': req.sessionID, 'status': 'created'})
             .then(function(doc){
-                console.log(doc);
                 if(doc){
                     var orderList = doc.orderList;
                     var hasOrder = false;
@@ -115,7 +150,6 @@ router.post('/addtoorder', function (req, res, next) {
                             hasOrder = true;
                             orderList[i].quantity = orderList[i].quantity + body.orderItem.quantity;
                         }
-
                     }
                     if(!hasOrder){
                         orderList.push(body.orderItem);
@@ -136,6 +170,69 @@ router.post('/addtoorder', function (req, res, next) {
     //console.log('test', order);
     res.json(body);
 });
+
+///MJS new router for adding new product
+//take uid and item order number
+//if uid does not exist, take sid
+router.put('/updateorderitem', function (req, res, next) {
+    var body = req.body;
+    var uid = body.uid;
+
+    if(body.uid){
+        Order.findOne({'uid': uid, 'status': 'created'}).populate('orderList.product')
+            .exec()
+            .then(function(doc){
+                if(doc){
+                    for(var i = 0; i < doc.orderList.length; i++) {
+                        //console.log(doc.orderList[i]._id, body.orderItem._id);
+                        if (doc.orderList[i]._id == body.orderItem._id) {
+                            if(body.orderItem.quantity <= 0){
+                                doc.orderList.splice(i, 1);
+                            }
+                            else {
+                                doc.orderList[i].quantity = body.orderItem.quantity;
+                            }
+                        }
+
+                    }
+                    doc.save()
+                        .then(function(data){
+                            res.json(data);
+                        })
+
+                } else {
+                    throw new Error('No Open Order need to be updated!');
+                }
+            });
+    }
+    else {
+        Order.findOne({'sid': req.sessionID, 'status': 'created'})
+            .then(function(doc){
+                if(doc){
+                    for(var i = 0; i < doc.orderList.length; i++) {
+                        //console.log(doc.orderList[i]._id, body.orderItem._id);
+                        if (doc.orderList[i]._id == body.orderItem._id) {
+                            if(body.orderItem.quantity <= 0){
+                                doc.orderList.splice(i, 1);
+                            }
+                            else {
+                                doc.orderList[i].quantity = body.orderItem.quantity;
+                            }
+                        }
+
+                    }
+                    doc.save()
+                        .then(function(data){
+                            res.json(data);
+                        })
+
+                } else {
+                    throw new Error('No Open Order need to be updated!');
+                }
+            });
+    }
+});
+
 
 router.get('/created/:uid', function (req, res, next){
     Order.find({uid: req.params.uid, status: 'created'})

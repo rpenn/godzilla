@@ -16,9 +16,6 @@ var OrderSchema = new mongoose.Schema({
     uid : {
         type: String
     },
-    //orderItems: {
-    //    type: [OrderItem.schema]
-    //},
     orderList: {
         type: [OrderItem.schema]
     },
