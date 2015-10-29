@@ -9,7 +9,7 @@ app.config(function ($stateProvider) {
                     return AuthService.getLoggedInUser();
                 }
             },
-            controller: function(){}
+            controller: function(orderFactory){}
         })
         .state('products.list', {
             url: '/list',
@@ -72,68 +72,34 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('ProductListCtrl', function ($scope, $state, products, orderFactory, user, $uibModal, $stateParams) {
+app.controller('ProductListCtrl', function ($scope, $state, $cookieStore, orderFactory, products, user, $uibModal, $stateParams) {
 
     $scope.orderItems = [];
-
-    console.log($stateParams);
 
     angular.forEach(products, function(product){
         $scope.orderItems.push({product: angular.copy(product)});
     });
 
-    $scope.user = user;
+    $scope.user = user || null;
 
     $scope.cart;
 
-    orderFactory.getCreatedOrder($scope.user._id).then(function(data){
-        $scope.cart = data;
-        console.log($scope.cart);
-    });
-
-    //function emailModal(){
-    //    var modalInstance = $uibModal.open({
-    //        animation: true,
-    //        templateUrl: 'myModalAddEmail.html',
-    //        controller: 'AddEmailCtrl'
-    //    });
-    //
-    //    modalInstance.result.then(function (email) {
-    //        $scope.order.email = email;
-    //    }, function () {
-    //        console.log('Modal dismissed at: ' + new Date());
-    //    });
-    //}
-
     $scope.addToCart = function(orderItem){
-        //todo, need to consider if user is not created
-        if($scope.user !== null ){
-            var hasInOrder = false;
 
-            angular.forEach($scope.cart.orderList, function(item){
-                if(item.product[0]._id === orderItem.product._id && item.size === orderItem.size){
-                    hasInOrder = true;
-                    item.quantity = item.quantity + orderItem.quantity;
-                }
-            });
+        var uid = $scope.user ? $scope.user._id : null;
+        orderFactory.addToOrder(uid, orderItem).then(function(data){
+            console.log(data);
+        });
 
-            if(!hasInOrder) {
-                $scope.cart.orderList.push(angular.copy(orderItem));
-            }
-
-            orderFactory.addToOrder($scope.cart).then(function(data){
-                console.log(data);
-            });
-        }
     };
 
 
 });
+
 app.controller('ProductListCategoryCtrl', function ($scope, $state, products, orderFactory, user, $stateParams, $uibModal) {
 
     $scope.orderItems = [];
     $scope.category = $stateParams;
-    //console.log($scope.category);
 
     var filterProducts = [];
 
@@ -151,31 +117,33 @@ app.controller('ProductListCategoryCtrl', function ($scope, $state, products, or
 
     $scope.cart;
 
-    orderFactory.getCreatedOrder($scope.user._id).then(function(data){
-        $scope.cart = data;
-        //console.log($scope.cart);
-    });
+
 
     $scope.addToCart = function(orderItem){
         //todo, need to consider if user is not created
-        if($scope.user !== null ){
-            var hasInOrder = false;
-
-            angular.forEach($scope.cart.orderList, function(item){
-                if(item.product[0]._id === orderItem.product._id && item.size === orderItem.size){
-                    hasInOrder = true;
-                    item.quantity = item.quantity + orderItem.quantity;
-                }
-            });
-
-            if(!hasInOrder) {
-                $scope.cart.orderList.push(angular.copy(orderItem));
-            }
-
-            orderFactory.addToOrder($scope.cart).then(function(data){
-                console.log(data);
-            });
-        }
+        //if($scope.user !== null ){
+        //    var hasInOrder = false;
+        //    console.log($scope.cart);
+        //    angular.forEach($scope.cart.orderList, function(item){
+        //        console.log(item);
+        //        if(item.product._id === orderItem.product._id && item.size === orderItem.size){
+        //            hasInOrder = true;
+        //            item.quantity = item.quantity + orderItem.quantity;
+        //        }
+        //    });
+        //
+        //    if(!hasInOrder) {
+        //        $scope.cart.orderList.push(angular.copy(orderItem));
+        //    }
+        //
+        //    orderFactory.addToOrder($scope.cart).then(function(data){
+        //        console.log(data);
+        //    });
+        //}
+        var uid = $scope.user ? $scope.user._id : null;
+        orderFactory.addToOrder(uid, orderItem).then(function(data){
+            console.log(data);
+        });
     };
 
 });

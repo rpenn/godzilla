@@ -18,6 +18,7 @@ function error (err) {
 });
 
 //create new product
+//restrict.admin,
 router.post('/', function (req, res, next) {
     Product.create(req.body)
     .then( fulfilled, error )

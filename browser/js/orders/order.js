@@ -4,9 +4,12 @@ app.config(function ($stateProvider) {
         url: '/orders',
         templateUrl: 'js/orders/order.html',
         resolve: {
-        	orders: function(orderFactory){
-        		return orderFactory.getAllOrders();
-        	}
+            user: function(AuthService){
+                return AuthService.getLoggedInUser();
+            },
+            orders: function(orderFactory, user){
+                return orderFactory.getAllOrders(user._id);
+            }
         },
         controller: 'OrderCtrl',
         data: {
@@ -17,7 +20,7 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('OrderCtrl', function ($scope, $state, orders) {
-
+    console.log(orders);
     $scope.orders = orders.filter(function(order){
         return order.status !== 'created';
     });

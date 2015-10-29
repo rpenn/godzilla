@@ -1,60 +1,13 @@
 <div class="container">
-    <!--<form>-->
-        <!--<div class="form-group">-->
-            <!--<label for="email">Email address</label>-->
-            <!--<input type="email" class="form-control" id="email" ng-model="user.email" placeholder="Email">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="password">Password</label>-->
-            <!--<input type="password" class="form-control" id="password" ng-model="user.password" placeholder="Password">-->
-        <!--</div>-->
-
-        <!--<div class="form-group">-->
-            <!--<label for="firstName">First Name</label>-->
-            <!--<input type="text" class="form-control" id="firstName" ng-model="user.firstName" placeholder="Eric">-->
-        <!--</div>-->
-
-        <!--<div class="form-group">-->
-            <!--<label for="lastName">Last Name</label>-->
-            <!--<input type="text" class="form-control" id="lastName" ng-model="user.lastName" placeholder="Patz">-->
-        <!--</div>-->
-
-        <!--<div class="form-group">-->
-            <!--<label for="address1">Address 1</label>-->
-            <!--<input type="text" class="form-control" id="address1" ng-model="address.address1" placeholder="123 Broadway">-->
-        <!--</div>-->
-
-        <!--<div class="form-group">-->
-            <!--<label for="address2">Address 2</label>-->
-            <!--<input type="text" class="form-control" id="address2" ng-model="address.address2" placeholder="apt 1D">-->
-        <!--</div>-->
-
-        <!--<div class="form-group">-->
-            <!--<label for="city">City</label>-->
-            <!--<input type="text" class="form-control" id="city" ng-model="address.city" placeholder="New York">-->
-        <!--</div>-->
-
-        <!--<div class="form-group">-->
-            <!--<label for="state">State</label>-->
-            <!--<input type="text" class="form-control" id="state" ng-model="address.state" placeholder="NY">-->
-        <!--</div>-->
-
-        <!--<div class="form-group">-->
-            <!--<label for="zip">Zip</label>-->
-            <!--<input type="text" class="form-control" id="zip" ng-model="address.zip" placeholder="Zip">-->
-        <!--</div>-->
-
-        <!--<button type="submit"  ng-click="createUser()" class="btn btn-default">Submit</button>-->
-    <!--</form>-->
 
     <div ng-repeat="item in orderItems">
         <div class="row">
             <div class="col-lg-2">
-                <img src="{{item.product[0].photo}}" class="img-thumbnail">
+                <img ng-src={{item.product[0].photo}} class="img-thumbnail">
             </div>
             <div class="col-lg-2">
-                <h4>{{item.product[0].brand}}</h4>
-                <h5>{{item.product[0].name}}</h5>
+                <h4>{{item.product.brand}}</h4>
+                <h5>{{item.product.name}}</h5>
             </div>
             <div class="col-lg-2">
                 <h5>black</h5>
@@ -62,12 +15,20 @@
             <div class="col-lg-2">
                 <h3>{{item.size}}</h3>
             </div>
-            <div class="col-lg-2">
-                <input type ="text" value="{{item.quantity}}" class="form-control">
+            <div class="col-lg-1">
+                <input type ="number" ng-model="item.quantity" class="form-control">
+                <a class="btn btn-info" ng-click="updateOrderItem(item)">update</a>
             </div>
             <div class="col-lg-2">
                 <h4>{{item.product[0].price*item.quantity | currency}}</h4>
             </div>
+            <div class="col-lg-1">
+                <a class="btn btn-warning" ng-click="removeOrderItem(item)"><i class="fa fa-times"></i></a>
+            </div>
         </div>
+    </div>
+    <ui-view></ui-view>
+    <div>
+        <a class="btn btn-primary" ui-sref="checkout.info">Check Out</a>
     </div>
 </div>

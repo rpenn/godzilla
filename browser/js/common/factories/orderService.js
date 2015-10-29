@@ -2,22 +2,30 @@ app.factory('orderFactory', ['$http', function($http) {
     var urlBase = '/api/orders';
     var orderFactory = {};
 
-
-
     var currentCart = null;
 
     //Get order of which state is CREATED
-    //by user id
+    ////by user id
     orderFactory.getCreatedOrder = function (uid) {
-        if(orderFactory.currentCart !== null){
-            return $http.get(urlBase+'/created/'+uid).then(function(result){
-                currentCart = result.data;
-                return currentCart;
-            });
+        if(uid){
+            return $http.get(urlBase+'/'+uid+'/created');
         }
         else {
-            return currentCart;
+            return $http.get(urlBase+'/guest/created');
         }
+
+    };
+
+    //pass uid, on the other end, api check uid, if no uid, then create order with session
+    orderFactory.addToOrder= function (uid, orderItem) {
+        return $http.post(urlBase+'/addtoorder', {uid: uid, orderItem: orderItem})
+            .then(function(result){
+                return result.data;
+            });
+    };
+
+    orderFactory.updateOrderItem = function(uid, orderItem){
+        return $http.put(urlBase+'/updateorderitem', {uid: uid, orderItem: orderItem});
     };
 
     // Get all orders
@@ -48,11 +56,11 @@ app.factory('orderFactory', ['$http', function($http) {
       });
     };
 
-    orderFactory.addToOrder = function () {
-        return $http.put(urlBase + '/', currentCart).then(function(result){
-            return result;
-        });
-    };
+    //orderFactory.addToOrder = function () {
+    //    return $http.put(urlBase + '/user_order', currentCart).then(function(result){
+    //        return result;
+    //    });
+    //};
 
     // Delete an order by id
     orderFactory.deleteOrder = function (id) {

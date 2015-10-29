@@ -5,10 +5,16 @@ var Address = mongoose.model('Address');
 var restrict = require('../../../services/restrict');
 var Product = mongoose.model('Product');
 var Review = mongoose.model('Review');
+var restrict = require('../../../services/restrict');
+
+var populateQuery = [{path:'user', select:'email'}, {path:'product'}];
 
 //get all reviews
 router.get('/', function (req, res, next){
-  Review.find().exec()
+
+  Review.find()
+ .populate(populateQuery)
+ .execPopulate()
     .then( fulfilled, error )
 
 function fulfilled (value) {
@@ -26,8 +32,9 @@ router.get('/product/:productId', function (req, res, next){
   Review.find( {
     product: req.params.productId
   } )
-  .populate('user', 'email')
-  .then(reviews, error)
+  .populate(populateQuery)
+  .execPopulate()
+  .then( reviews, error )
 
   function reviews (reviews) {
         res.json(reviews).status(200);
@@ -60,7 +67,7 @@ router.post('/product/:productId/user/:userId/review', function (req, res, next)
 });
 
 //delete a review
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', restrict.admin, function (req, res, next) {
   User.findOneAndRemove( {_id: req.params.id} )
     .then(function() {
       res.status(204).end();
