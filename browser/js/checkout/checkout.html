@@ -46,11 +46,11 @@
 
         <!--<button type="submit"  ng-click="createUser()" class="btn btn-default">Submit</button>-->
     <!--</form>-->
-
+{{orderItems}}
     <div ng-repeat="item in orderItems">
         <div class="row">
             <div class="col-lg-2">
-                <img src="{{item.product[0].photo}}" class="img-thumbnail">
+                <img ng-src="{{item.product[0].photo}}" class="img-thumbnail">
             </div>
             <div class="col-lg-2">
                 <h4>{{item.product[0].brand}}</h4>

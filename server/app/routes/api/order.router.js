@@ -31,16 +31,16 @@ router.get('/get-order/:id', function (req, res, next){
         .then(null, next);
 });
 
-//get current cart
-router.get('/get-order/:id', function (req, res, next){
-    Order.findById( {'user': req.params.id, 'status': 'created'} )
-        .populate('orderList.product')
-        .exec()
-        .then(function (order) {
-            res.json(order);
-        })
-        .then(null, next);
-});
+////get current cart
+//router.get('/get-order/:id', function (req, res, next){
+//    Order.findById( {'user': req.params.id, 'status': 'created'} )
+//        .populate('orderList.product')
+//        .exec()
+//        .then(function (order) {
+//            res.json(order);
+//        })
+//        .then(null, next);
+//});
 
 
 router.post('/add-to-order/guest', function (req, res, next) {
@@ -77,6 +77,7 @@ router.post('checkout/guest', function (req, res, next) {
 router.get('/created/:uid', function (req, res, next){
     Order.find({uid: req.params.uid, status: 'created'})
         .then(function (doc) {
+            console.log(doc);
             if(doc.length === 0){
                 Order.create({uid: req.params.uid}).then(function(data){
                     res.json(data);
@@ -86,13 +87,13 @@ router.get('/created/:uid', function (req, res, next){
                 throw new Error('There is more than one cart');
             }
             else if(doc.length === 1){
-                Order.findOne({sid: req.sessionID})
-                .then(function(order){
-                    var newOrderList = doc[0].orderList.concat(order.orderList);
-                    doc[0].orderList = newOrderList;
+               // Order.findOne({sid: req.sessionID})
+               // .then(function(order){
+                //    var newOrderList = doc[0].orderList.concat(order.orderList);
+               //     doc[0].orderList = newOrderList;
                     res.json(doc[0]);
                     //* untested!
-                })
+                //})
             }
             else {
                 next();
@@ -102,9 +103,8 @@ router.get('/created/:uid', function (req, res, next){
 });
 
 //this currently is working 10-27, modify cautiously
-router.put('/edit-order', function (req, res, next){
+router.put('/user_order', function (req, res, next){
     var order = req.body;
-
     for(var i=0; i<order.orderList.length; i++){
         order.orderList[i] = new OrderItem(order.orderList[i]);
     }

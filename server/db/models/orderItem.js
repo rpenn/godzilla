@@ -4,19 +4,19 @@ var Product = mongoose.model('Product');
 
 
 var OrderItemSchema = new mongoose.Schema({
+     //the reason use schema instead of reference, because if product is removed some time,
+    //when we come back check the order, it is still there
       product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Product'
+          type: [Product.Schema],
+          required: true
       },
-
       size: {
           type: String,
           enum: ['s','m','l','xl']
       },
-
       quantity: {
           type: Number,
-          default: 0
+          default: 1
       },
 
       discount: {
@@ -25,24 +25,5 @@ var OrderItemSchema = new mongoose.Schema({
       }
 });
 
-
-// var OrderItemSchema = new mongoose.Schema({
-//        product: {
-//           type: [Product.Schema],
-//           required: false
-//        },
-//        size: {
-//           type: String,
-//           enum: ['s','m','l','xl']
-//        },
-//        quantity: {
-//            type: Number,
-//            default: 0
-//        },
-//         discount: {
-//             type: Number,
-//             default: 0
-//         }
-// })
-
 mongoose.model('OrderItem', OrderItemSchema);
+//final version

@@ -2,14 +2,12 @@ app.factory('orderFactory', ['$http', function($http) {
     var urlBase = '/api/orders';
     var orderFactory = {};
 
-
-
     var currentCart = null;
 
     //Get order of which state is CREATED
     //by user id
     orderFactory.getCreatedOrder = function (uid) {
-        if(orderFactory.currentCart !== null){
+        if(currentCart === null){
             return $http.get(urlBase+'/created/'+uid).then(function(result){
                 currentCart = result.data;
                 return currentCart;
@@ -42,14 +40,14 @@ app.factory('orderFactory', ['$http', function($http) {
     };
 
     // Update an order by id
-    orderFactory.updateOrder = function (id, orderInfo) {
-      return $http.put(urlBase + '/' + id, orderInfo).then(function(result){
-        return result;
-      });
-    };
+    //orderFactory.updateOrder = function (id, orderInfo) {
+    //  return $http.put(urlBase + '/' + id, orderInfo).then(function(result){
+    //    return result;
+    //  });
+    //};
 
     orderFactory.addToOrder = function () {
-        return $http.put(urlBase + '/', currentCart).then(function(result){
+        return $http.put(urlBase + '/user_order', currentCart).then(function(result){
             return result;
         });
     };

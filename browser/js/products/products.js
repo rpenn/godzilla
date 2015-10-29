@@ -9,7 +9,7 @@ app.config(function ($stateProvider) {
                     return AuthService.getLoggedInUser();
                 }
             },
-            controller: function(){}
+            controller: function(orderFactory){}
         })
         .state('products.list', {
             url: '/list',
@@ -72,11 +72,9 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('ProductListCtrl', function ($scope, $state, products, orderFactory, user, $uibModal, $stateParams) {
+app.controller('ProductListCtrl', function ($scope, $state, orderFactory, products, user, $uibModal, $stateParams) {
 
     $scope.orderItems = [];
-
-    console.log($stateParams);
 
     angular.forEach(products, function(product){
         $scope.orderItems.push({product: angular.copy(product)});
@@ -86,24 +84,12 @@ app.controller('ProductListCtrl', function ($scope, $state, products, orderFacto
 
     $scope.cart;
 
-    orderFactory.getCreatedOrder($scope.user._id).then(function(data){
-        $scope.cart = data;
-        console.log($scope.cart);
-    });
-
-    //function emailModal(){
-    //    var modalInstance = $uibModal.open({
-    //        animation: true,
-    //        templateUrl: 'myModalAddEmail.html',
-    //        controller: 'AddEmailCtrl'
-    //    });
-    //
-    //    modalInstance.result.then(function (email) {
-    //        $scope.order.email = email;
-    //    }, function () {
-    //        console.log('Modal dismissed at: ' + new Date());
-    //    });
-    //}
+    if($scope.user) {
+        $scope.cart = orderFactory.getCreatedOrder($scope.user._id);
+    }
+    else {
+        //get session create cart
+    }
 
     $scope.addToCart = function(orderItem){
         //todo, need to consider if user is not created
@@ -129,11 +115,11 @@ app.controller('ProductListCtrl', function ($scope, $state, products, orderFacto
 
 
 });
+
 app.controller('ProductListCategoryCtrl', function ($scope, $state, products, orderFactory, user, $stateParams, $uibModal) {
 
     $scope.orderItems = [];
     $scope.category = $stateParams;
-    //console.log($scope.category);
 
     var filterProducts = [];
 
@@ -151,10 +137,12 @@ app.controller('ProductListCategoryCtrl', function ($scope, $state, products, or
 
     $scope.cart;
 
-    orderFactory.getCreatedOrder($scope.user._id).then(function(data){
-        $scope.cart = data;
-        //console.log($scope.cart);
-    });
+    if($scope.user) {
+        $scope.cart = orderFactory.getCreatedOrder($scope.user._id);
+    }
+    else {
+        //get session create cart
+    }
 
     $scope.addToCart = function(orderItem){
         //todo, need to consider if user is not created
@@ -162,7 +150,8 @@ app.controller('ProductListCategoryCtrl', function ($scope, $state, products, or
             var hasInOrder = false;
 
             angular.forEach($scope.cart.orderList, function(item){
-                if(item.product[0]._id === orderItem.product._id && item.size === orderItem.size){
+                console.log(item);
+                if(item.product._id === orderItem.product._id && item.size === orderItem.size){
                     hasInOrder = true;
                     item.quantity = item.quantity + orderItem.quantity;
                 }
