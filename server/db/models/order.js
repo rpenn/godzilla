@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
 var OrderItem = mongoose.model('OrderItem');
+var Promise = require('bluebird');
 
 var OrderSchema = new mongoose.Schema({
     //uid: String,
@@ -23,7 +24,8 @@ var OrderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['created', 'processing', 'cancelled', 'completed']
+        enum: ['created', 'processing', 'cancelled', 'completed'],
+        default: 'created'
     },
     shippingAddress : {
         address1: {

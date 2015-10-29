@@ -53,7 +53,7 @@ router.post('/add-to-order/guest', function (req, res, next) {
                 });
             }
             else if(doc.length === 1){
-                console.log(doc[0].orderList);
+                //console.log(doc[0].orderList);
                 doc[0].orderList.push(req.body)
                 doc[0].save()
                 .then(function(doc) {
@@ -69,15 +69,78 @@ router.post('/add-to-order/guest', function (req, res, next) {
 
 router.put('/remove/:orderId/:')
 
-router.post('checkout/guest', function (req, res, next) {
+//ACCOMPLISHED No Need to change
+router.post('/addtoorder', function (req, res, next) {
+    var body = req.body;
+    var uid = body.uid;
+    if(body.uid){
+        Order.findOne({'uid': uid, 'status': 'created'})
+            .then(function(doc){
+                console.log(doc);
+                if(doc){
+                    var orderList = doc.orderList;
+                    var hasOrder = false;
+                    for(var i = 0; i < orderList.length; i++) {
+                        if (orderList[i].product[0]._id === body.orderItem.product._id && orderList[i].size === body.orderItem.size) {
+                            hasOrder = true;
+                            orderList[i].quantity = orderList[i].quantity + body.orderItem.quantity;
+                        }
 
-})
+                    }
+                    if(!hasOrder){
+                        orderList.push(body.orderItem);
+                    }
+                    doc.save()
+                        .then(function(data){
+                            res.json(data);
+                        })
 
+                } else {
+                    Order.create({'uid': uid, 'orderList': [new OrderItem(body.orderItem)]})
+                        .then(function(data){
+                            res.json(data);
+                        });
+                }
+            });
+    }
+    else {
+        Order.findOne({'sid': req.sessionID, 'status': 'created'})
+            .then(function(doc){
+                console.log(doc);
+                if(doc){
+                    var orderList = doc.orderList;
+                    var hasOrder = false;
+                    for(var i = 0; i < orderList.length; i++) {
+                        if (orderList[i].product[0]._id === body.orderItem.product._id && orderList[i].size === body.orderItem.size) {
+                            hasOrder = true;
+                            orderList[i].quantity = orderList[i].quantity + body.orderItem.quantity;
+                        }
+
+                    }
+                    if(!hasOrder){
+                        orderList.push(body.orderItem);
+                    }
+                    doc.save()
+                        .then(function(data){
+                            res.json(data);
+                        })
+
+                } else {
+                    Order.create({sid: req.sessionID, orderList: [new OrderItem(body.orderItem)]})
+                        .then(function(data){
+                            res.json(data);
+                        });
+                }
+            });
+    }
+    //console.log('test', order);
+    res.json(body);
+});
 
 router.get('/created/:uid', function (req, res, next){
     Order.find({uid: req.params.uid, status: 'created'})
         .then(function (doc) {
-            console.log(doc);
+           // console.log(doc);
             if(doc.length === 0){
                 Order.create({uid: req.params.uid}).then(function(data){
                     res.json(data);

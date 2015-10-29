@@ -18,6 +18,14 @@ app.factory('orderFactory', ['$http', function($http) {
         }
     };
 
+    //pass uid, on the other end, api check uid, if no uid, then create order with session
+    orderFactory.addToOrder= function (uid, orderItem) {
+        return $http.post(urlBase+'/addtoorder', {uid: uid, orderItem: orderItem})
+            .then(function(result){
+                return result.data;
+            });
+    };
+
     // Get all orders
     orderFactory.getAllOrders = function (uid) {
       return $http.get(urlBase + '/' + uid).then(function(result){
@@ -40,17 +48,17 @@ app.factory('orderFactory', ['$http', function($http) {
     };
 
     // Update an order by id
-    //orderFactory.updateOrder = function (id, orderInfo) {
-    //  return $http.put(urlBase + '/' + id, orderInfo).then(function(result){
-    //    return result;
-    //  });
-    //};
-
-    orderFactory.addToOrder = function () {
-        return $http.put(urlBase + '/user_order', currentCart).then(function(result){
-            return result;
-        });
+    orderFactory.updateOrder = function (id, orderInfo) {
+      return $http.put(urlBase + '/' + id, orderInfo).then(function(result){
+        return result;
+      });
     };
+
+    //orderFactory.addToOrder = function () {
+    //    return $http.put(urlBase + '/user_order', currentCart).then(function(result){
+    //        return result;
+    //    });
+    //};
 
     // Delete an order by id
     orderFactory.deleteOrder = function (id) {

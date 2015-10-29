@@ -72,7 +72,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('ProductListCtrl', function ($scope, $state, orderFactory, products, user, $uibModal, $stateParams) {
+app.controller('ProductListCtrl', function ($scope, $state, $cookieStore, orderFactory, products, user, $uibModal, $stateParams) {
 
     $scope.orderItems = [];
 
@@ -80,37 +80,43 @@ app.controller('ProductListCtrl', function ($scope, $state, orderFactory, produc
         $scope.orderItems.push({product: angular.copy(product)});
     });
 
-    $scope.user = user;
+    $scope.user = user || null;
 
     $scope.cart;
 
     if($scope.user) {
-        $scope.cart = orderFactory.getCreatedOrder($scope.user._id);
+       // $scope.cart = orderFactory.getCreatedOrder($scope.user._id);
     }
     else {
         //get session create cart
     }
 
     $scope.addToCart = function(orderItem){
-        //todo, need to consider if user is not created
-        if($scope.user !== null ){
-            var hasInOrder = false;
+        //if user exist
+        //if($scope.user !== null ){
+        //
+        //    var hasInOrder = false;
+        //
+        //    angular.forEach($scope.cart.orderList, function(item){
+        //        if(item.product._id === orderItem.product._id && item.size === orderItem.size){
+        //            hasInOrder = true;
+        //            item.quantity = item.quantity + orderItem.quantity;
+        //        }
+        //    });
+        //
+        //    if(!hasInOrder) {
+        //        $scope.cart.orderList.push(angular.copy(orderItem));
+        //    }
+        //
+        //    orderFactory.addToOrder($scope.cart).then(function(data){
+        //        console.log(data);
+        //    });
+        //}
+        var uid = $scope.user ? $scope.user._id : null;
+        orderFactory.addToOrder(uid, orderItem).then(function(data){
+            console.log(data);
+        });
 
-            angular.forEach($scope.cart.orderList, function(item){
-                if(item.product[0]._id === orderItem.product._id && item.size === orderItem.size){
-                    hasInOrder = true;
-                    item.quantity = item.quantity + orderItem.quantity;
-                }
-            });
-
-            if(!hasInOrder) {
-                $scope.cart.orderList.push(angular.copy(orderItem));
-            }
-
-            orderFactory.addToOrder($scope.cart).then(function(data){
-                console.log(data);
-            });
-        }
     };
 
 
@@ -138,7 +144,9 @@ app.controller('ProductListCategoryCtrl', function ($scope, $state, products, or
     $scope.cart;
 
     if($scope.user) {
-        $scope.cart = orderFactory.getCreatedOrder($scope.user._id);
+        orderFactory.getCreatedOrder($scope.user._id).then(function(data){
+            $scope.cart = data;
+        });
     }
     else {
         //get session create cart
@@ -148,7 +156,7 @@ app.controller('ProductListCategoryCtrl', function ($scope, $state, products, or
         //todo, need to consider if user is not created
         if($scope.user !== null ){
             var hasInOrder = false;
-
+            console.log($scope.cart);
             angular.forEach($scope.cart.orderList, function(item){
                 console.log(item);
                 if(item.product._id === orderItem.product._id && item.size === orderItem.size){
