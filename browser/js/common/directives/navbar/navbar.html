@@ -12,6 +12,7 @@
         </ul>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <button ng-show="!user" ui-sref="signup" class="btn  login-button">Signup</button>
+        <button ng-show="!user" ui-sref="checkout" class="btn  login-button"><i class="fa fa-shopping-cart fa-lg"></i></button>
         <div ng-show="user" class="welcome">
             <span uib-dropdown on-toggle="toggled(open)">
                 <a href id="simple-dropdown" uib-dropdown-toggle>

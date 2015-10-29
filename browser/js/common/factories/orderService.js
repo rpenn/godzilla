@@ -7,7 +7,6 @@ app.factory('orderFactory', ['$http', function($http) {
     //Get order of which state is CREATED
     ////by user id
     orderFactory.getCreatedOrder = function (uid) {
-        console.log('getCreated ordr' ,uid);
         if(uid){
             return $http.get(urlBase+'/'+uid+'/created');
         }

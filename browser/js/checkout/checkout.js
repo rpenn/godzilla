@@ -21,10 +21,7 @@ app.config(function ($stateProvider) {
         .state('checkout.info', {
             url: '/info/:id',
             templateUrl: 'js/checkout/info.html',
-            controller: 'CheckoutCtrl',
-            data: {
-                authenticate: true
-            }
+            controller: 'CheckoutCtrl'
         });
 });
 
