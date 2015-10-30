@@ -12,8 +12,6 @@ app.config(function ($stateProvider) {
         controller: 'SignupCtrl'
     });
 
-
-
 });
 
 app.controller('LoginCtrl', function ($scope, AuthService, $state) {
