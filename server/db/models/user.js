@@ -6,20 +6,72 @@ var CreditCard = mongoose.model('CreditCard');
 //var Order = mongoose.model('Order');
 
 var userSchema = new mongoose.Schema({
-    firstName: {
-        type: String
-    },
-    lastName: {
-        type: String
-    },
+
     email: {
         type: String
     },
-    addressesOnFile: {
-        type: [Address.schema]
+    shippingAddress : {
+        firstName: {
+            type: String
+        },
+        lastName: {
+            type: String
+        },
+        address1: {
+            type: String
+        },
+        address2: {
+            type: String
+        },
+        city: {
+            type: String
+        },
+        state: {
+            type: String
+        },
+        zip: {
+            type: String
+        },
+        country: {
+            type: String
+        }
     },
-    creditCardsOnFile: {
-        type: [CreditCard.schema]
+    creditCard: {
+        nameOnCard: {
+            type: String
+        },
+        cardNumber: {
+            type: String
+        },
+        lastFourCard: {
+            type: String
+        },
+        expMonth: {
+            type: String
+        },
+        expYear: {
+            type: String
+        },
+        billingAddress: {
+            address1: {
+                type: String
+            },
+            address2: {
+                type: String
+            },
+            city: {
+                type: String
+            },
+            state: {
+                type: String
+            },
+            zip: {
+                type: String
+            },
+            country: {
+                type: String
+            }
+        }
     },
     orderHistory : [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
     password: {

@@ -37,9 +37,7 @@ app.factory('orderFactory', ['$http', function($http) {
 
     // Place an order
     orderFactory.placeOrder = function (order) {
-      return $http.post(urlBase, order).then(function(result){
-        return result;
-      });
+      return $http.post(urlBase+'/checkout', order);
     };
 
     // Get an individual order by id

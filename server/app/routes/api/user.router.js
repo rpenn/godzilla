@@ -65,19 +65,25 @@ function error (err) {
 
 //edit by id
 router.put('/:id', function (req, res, next){
+    var userUpdate = req.body;
 
-    for(var x=0; x < req.body.address.length; x++){
-        req.body.address[x] = new Address(req.body.address[x]);
-    }
 	User.findById(req.params.id)
 		.then(function (user) {
-			for (var key in req.body) {
-        user[key] = req.body[key]
-      }
-			user.save()
-    .then( fulfilled, error )
-  })
-})
+            for (var key in userUpdate) {
+                user[key] = userUpdate[key]
+            }
+            return user.save()
+        })
+        .then( fulfilled, error );
+    function fulfilled (response) {
+        console.log(response);
+        res.status(201);
+    }
+    function error (err) {
+        next(err);
+    }
+
+});
 
 //delete by id
 router.delete('/:id', restrict.admin, function (req, res, next) {

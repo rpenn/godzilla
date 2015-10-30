@@ -72,7 +72,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('ProductListCtrl', function ($scope, $state, $cookieStore, orderFactory, products, user, $uibModal, $stateParams) {
+app.controller('ProductListCtrl', function ($scope, $state, orderFactory, products, user, $uibModal, $stateParams) {
 
     $scope.orderItems = [];
 

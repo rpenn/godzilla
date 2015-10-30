@@ -233,6 +233,18 @@ router.put('/updateorderitem', function (req, res, next) {
     }
 });
 
+router.post('/checkout', function(req, res, next){
+    var body = req.body;
+    Order.findOne({_id: body._id}).then(function(doc){
+        doc.status = 'processing';
+        doc.shippingAddress=body.shippingAddress;
+        doc.creditCard = body.creditCard;
+        doc.save().then(function(response){
+            res.json(response);
+        })
+    });
+
+});
 
 router.get('/created/:uid', function (req, res, next){
     Order.find({uid: req.params.uid, status: 'created'})

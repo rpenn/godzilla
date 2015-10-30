@@ -25,6 +25,12 @@ var OrderSchema = new mongoose.Schema({
         default: 'created'
     },
     shippingAddress : {
+        firstName: {
+            type: String
+        },
+        lastName: {
+            type: String
+        },
         address1: {
             type: String
         },

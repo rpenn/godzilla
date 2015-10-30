@@ -1,47 +1,106 @@
 <form>
-<div class="form-group">
-<label for="email">Email address</label>
-<input type="email" class="form-control" id="email" ng-model="user.email" placeholder="Email">
-</div>
-<div class="form-group">
-<label for="password">Password</label>
-<input type="password" class="form-control" id="password" ng-model="user.password" placeholder="Password">
-</div>
+    <script type="text/ng-template" id="group-template.html">
+        <div class="panel {{panelClass || 'panel-default'}}">
+            <div class="panel-heading">
+                <h4 class="panel-title" style="color:#fa39c3">
+                    <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
+                            ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+                </h4>
+            </div>
+            <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                <div class="panel-body" style="text-align: right" ng-transclude></div>
+            </div>
+        </div>
+    </script>
 
-<div class="form-group">
-<label for="firstName">First Name</label>
-<input type="text" class="form-control" id="firstName" ng-model="user.firstName" placeholder="Eric">
-</div>
 
-<div class="form-group">
-<label for="lastName">Last Name</label>
-<input type="text" class="form-control" id="lastName" ng-model="user.lastName" placeholder="Patz">
-</div>
+    <uib-accordion>
 
-<div class="form-group">
-<label for="address1">Address 1</label>
-<input type="text" class="form-control" id="address1" ng-model="address.address1" placeholder="123 Broadway">
-</div>
+        <uib-accordion-group heading="Shipping Address" is-open="status.isFirstOpen">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" ng-model="user.shippingAddress.firstName" placeholder="Eric">
+            </div>
 
-<div class="form-group">
-<label for="address2">Address 2</label>
-<input type="text" class="form-control" id="address2" ng-model="address.address2" placeholder="apt 1D">
-</div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" ng-model="user.shippingAddress.lastName" placeholder="Patz">
+            </div>
 
-<div class="form-group">
-<label for="city">City</label>
-<input type="text" class="form-control" id="city" ng-model="address.city" placeholder="New York">
-</div>
+            <div class="form-group">
+                <label for="address1">Address 1</label>
+                <input type="text" class="form-control" id="address1" ng-model="user.shippingAddress.address1" placeholder="123 Broadway">
+            </div>
 
-<div class="form-group">
-<label for="state">State</label>
-<input type="text" class="form-control" id="state" ng-model="address.state" placeholder="NY">
-</div>
+            <div class="form-group">
+                <label for="address2">Address 2</label>
+                <input type="text" class="form-control" id="address2" ng-model="user.shippingAddress.address2" placeholder="apt 1D">
+            </div>
 
-<div class="form-group">
-<label for="zip">Zip</label>
-<input type="text" class="form-control" id="zip" ng-model="address.zip" placeholder="Zip">
-</div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" ng-model="user.shippingAddress.city" placeholder="New York">
+            </div>
 
-<button type="submit"  ng-click="createUser()" class="btn btn-default">Submit</button>
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" ng-model="user.shippingAddress.state" placeholder="NY">
+            </div>
+
+            <div class="form-group">
+                <label for="zip">Zip</label>
+                <input type="text" class="form-control" id="zip" ng-model="user.shippingAddress.zip" placeholder="Zip">
+            </div>
+        </uib-accordion-group>
+
+        <uib-accordion-group heading="Credit Card Information">
+
+            <div class="form-group">
+                <label for="nameOnCard">Name on Card</label>
+                <input type="text" class="form-control" id="nameOnCard" ng-model="user.creditCard.nameOnCard" placeholder="Peter Logers">
+            </div>
+
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" class="form-control" id="cardNumber" ng-model="user.creditCard.cardNumber" placeholder="xxxxxxxxxxx1234">
+            </div>
+
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control" placeholder="01" id="expMonth" ng-model="user.creditCard.expMonth">
+                    <span class="input-group-addon">/</span>
+                    <input type="text" class="form-control" placeholder="09" id="expYear" ng-model="user.creditCard.expYear">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="ccaddress1">Address 1</label>
+                <input type="text" class="form-control" id="ccaddress1" ng-model="user.creditCard.billingAddress.address1" placeholder="123 Broadway">
+            </div>
+
+            <div class="form-group">
+                <label for="ccaddress2">Address 2</label>
+                <input type="text" class="form-control" id="ccaddress2" ng-model="user.creditCard.billingAddress.address2" placeholder="apt 1D">
+            </div>
+
+            <div class="form-group">
+                <label for="cccity">City</label>
+                <input type="text" class="form-control" id="cccity" ng-model="user.creditCard.billingAddress.city" placeholder="New York">
+            </div>
+
+            <div class="form-group">
+                <label for="ccstate">State</label>
+                <input type="text" class="form-control" id="ccstate" ng-model="user.creditCard.billingAddress.state" placeholder="NY">
+            </div>
+
+            <div class="form-group">
+                <label for="cczip">Zip</label>
+                <input type="text" class="form-control" id="cczip" ng-model="user.creditCard.billingAddress.zip" placeholder="Zip">
+            </div>
+        </uib-accordion-group>
+
+    </uib-accordion>
+
+    <button type="submit"  ng-click="checkout()" class="btn btn-default">Submit</button>
+{{user}}
 </form>
