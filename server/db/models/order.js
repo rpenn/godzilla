@@ -16,9 +16,6 @@ var OrderSchema = new mongoose.Schema({
     uid : {
         type: String
     },
-    orderList: {
-        type: [OrderItem.schema]
-    },
     status: {
         type: String,
         enum: ['created', 'processing', 'cancelled', 'completed'],

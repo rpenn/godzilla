@@ -58,8 +58,7 @@ console.log(user);
                 $scope.order.creditCard = angular.copy($scope.user.creditCard);
                 var userUpdate = {
                     shippingAddress: angular.copy($scope.user.shippingAddress),
-                    creditCard: angular.copy($scope.user.creditCard),
-                    order: angular.copy($scope.order)
+                    creditCard: angular.copy($scope.user.creditCard)
                 };
                 userFactory.updateUser(uid,userUpdate).then(function(){
                     $state.go('orders');

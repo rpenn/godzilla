@@ -2,6 +2,7 @@ var router = require('express').Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Address = mongoose.model('Address');
+var Order = mongoose.model('Order');
 var restrict = require('../../../services/restrict');
 
 //get all users
@@ -70,7 +71,7 @@ router.put('/:id', function (req, res, next){
 	User.findById(req.params.id)
 		.then(function (user) {
             for (var key in userUpdate) {
-                user[key] = userUpdate[key]
+                user[key] = userUpdate[key];
             }
             return user.save()
         })
