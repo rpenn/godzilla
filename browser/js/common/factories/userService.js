@@ -5,7 +5,7 @@ app.factory('userFactory', ['$http', function($http) {
     // Get all users
     userFactory.getAllUsers = function () {
       return $http.get(urlBase).then(function(result){
-        return result;
+        return result.data;
       });
     };
 
@@ -24,10 +24,8 @@ app.factory('userFactory', ['$http', function($http) {
     };
 
     // Update an existing user by id
-    userFactory.updateUser = function (id, userInfo) {
-      return $http.put(urlBase + '/' + id, userInfo).then(function(result){
-        return result;
-      });
+    userFactory.updateUser = function (id, userUpdate) {
+      return $http.put(urlBase + '/'+id, userUpdate);
     };
 
     // Delete a user

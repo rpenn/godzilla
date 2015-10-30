@@ -1,34 +1,43 @@
 <div class="container">
+    <div style="text-align: center" ng-show="orderItems.length === 0">
+        <a class="img-thumbnail" ui-sref="products.list" >
+            <fullstack-logo></fullstack-logo>
+        </a>
+        <h1>Click the logo, go Shopping!!!</h1>
+    </div>
 
-    <div ng-repeat="item in orderItems">
-        <div class="row">
-            <div class="col-lg-2">
-                <img ng-src={{item.product[0].photo}} class="img-thumbnail">
-            </div>
-            <div class="col-lg-2">
-                <h4>{{item.product.brand}}</h4>
-                <h5>{{item.product.name}}</h5>
-            </div>
-            <div class="col-lg-2">
-                <h5>black</h5>
-            </div>
-            <div class="col-lg-2">
-                <h3>{{item.size}}</h3>
-            </div>
-            <div class="col-lg-1">
-                <input type ="number" ng-model="item.quantity" class="form-control">
-                <a class="btn btn-info" ng-click="updateOrderItem(item)">update</a>
-            </div>
-            <div class="col-lg-2">
-                <h4>{{item.product[0].price*item.quantity | currency}}</h4>
-            </div>
-            <div class="col-lg-1">
-                <a class="btn btn-warning" ng-click="removeOrderItem(item)"><i class="fa fa-times"></i></a>
+    <div ng-hide="orderItems.length === 0">
+        <div ng-repeat="item in orderItems">
+            <div class="row">
+                <div class="col-lg-2">
+                    <img ng-src={{item.product[0].photo}} class="img-thumbnail">
+                </div>
+                <div class="col-lg-2">
+                    <h4>{{item.product.brand}}</h4>
+                    <h5>{{item.product.name}}</h5>
+                </div>
+                <div class="col-lg-2">
+                    <h5>black</h5>
+                </div>
+                <div class="col-lg-2">
+                    <h3>{{item.size}}</h3>
+                </div>
+                <div class="col-lg-1">
+                    <input type ="number" ng-model="item.quantity" class="form-control">
+                    <a class="btn btn-info" ng-click="updateOrderItem(item)">update</a>
+                </div>
+                <div class="col-lg-2">
+                    <h4>{{item.product[0].price*item.quantity | currency}}</h4>
+                </div>
+                <div class="col-lg-1">
+                    <a class="btn btn-warning" ng-click="removeOrderItem(item)"><i class="fa fa-times"></i></a>
+                </div>
             </div>
         </div>
+        <ui-view></ui-view>
+        <div>
+            <a class="btn btn-primary" ui-sref="checkout.info">Check Out</a>
+        </div>
     </div>
-    <ui-view></ui-view>
-    <div>
-        <a class="btn btn-primary" ui-sref="checkout.info">Check Out</a>
-    </div>
+
 </div>

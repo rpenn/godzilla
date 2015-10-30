@@ -5,8 +5,23 @@ var OrderItem = mongoose.model('OrderItem');
 var _ = require('lodash');
 //var restrict = require('../../../services/restrict');
 
-//get all orders
-//MJS new route
+
+
+router.get('/', function (req, res, next){
+    Order.find()
+        .populate('orderList.product')
+        .exec()
+        .then( fulfilled, error )
+
+    function fulfilled (value) {
+        res.json(value).status(204);
+    }
+    function error (err) {
+        next(err);
+    }
+
+});
+
 router.get('/:uid', function (req, res, next){
 	Order.find({uid: req.params.uid})
     .populate('orderList.product')
@@ -112,7 +127,6 @@ router.post('/addtoorder', function (req, res, next) {
     if(body.uid){
         Order.findOne({'uid': uid, 'status': 'created'})
             .then(function(doc){
-                console.log(doc);
                 if(doc){
                     var orderList = doc.orderList;
                     var hasOrder = false;
@@ -134,6 +148,7 @@ router.post('/addtoorder', function (req, res, next) {
                 } else {
                     Order.create({'uid': uid, 'orderList': [new OrderItem(body.orderItem)]})
                         .then(function(data){
+                            console.log('test',data);
                             res.json(data);
                         });
                 }
@@ -177,14 +192,14 @@ router.post('/addtoorder', function (req, res, next) {
 router.put('/updateorderitem', function (req, res, next) {
     var body = req.body;
     var uid = body.uid;
-
+    console.log(uid);
     if(body.uid){
         Order.findOne({'uid': uid, 'status': 'created'}).populate('orderList.product')
             .exec()
             .then(function(doc){
                 if(doc){
                     for(var i = 0; i < doc.orderList.length; i++) {
-                        //console.log(doc.orderList[i]._id, body.orderItem._id);
+                        console.log(doc.orderList[i]._id, body.orderItem._id);
                         if (doc.orderList[i]._id == body.orderItem._id) {
                             if(body.orderItem.quantity <= 0){
                                 doc.orderList.splice(i, 1);
@@ -233,6 +248,18 @@ router.put('/updateorderitem', function (req, res, next) {
     }
 });
 
+router.post('/checkout', function(req, res, next){
+    var body = req.body;
+    Order.findOne({_id: body._id}).then(function(doc){
+        doc.status = 'processing';
+        doc.shippingAddress=body.shippingAddress;
+        doc.creditCard = body.creditCard;
+        doc.save().then(function(response){
+            res.json(response);
+        })
+    });
+
+});
 
 router.get('/created/:uid', function (req, res, next){
     Order.find({uid: req.params.uid, status: 'created'})

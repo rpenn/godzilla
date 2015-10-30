@@ -4,11 +4,9 @@ var OrderItem = mongoose.model('OrderItem');
 var Promise = require('bluebird');
 
 var OrderSchema = new mongoose.Schema({
-    //uid: String,
-    //orderList: {
-    //    type: [OrderItem.schema]
-    //},
-
+    orderList: {
+        type: [OrderItem.schema]
+    },
     ModifiedDate : { type : Date, default: Date.now },
     sid: {
         type: String
@@ -16,15 +14,18 @@ var OrderSchema = new mongoose.Schema({
     uid : {
         type: String
     },
-    orderList: {
-        type: [OrderItem.schema]
-    },
     status: {
         type: String,
         enum: ['created', 'processing', 'cancelled', 'completed'],
         default: 'created'
     },
     shippingAddress : {
+        firstName: {
+            type: String
+        },
+        lastName: {
+            type: String
+        },
         address1: {
             type: String
         },

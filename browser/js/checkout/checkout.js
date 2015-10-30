@@ -10,7 +10,6 @@ app.config(function ($stateProvider) {
             },
             order: function(orderFactory, user){
                 var uid = user ? user._id : null;
-
                 return orderFactory.getCreatedOrder(uid).then(function(res){
                     return res.data;
                 });
@@ -27,10 +26,10 @@ app.config(function ($stateProvider) {
 
 app.controller('CheckoutCtrl', function ($scope, $state, userFactory, orderFactory, order, user) {
     $scope.address = {};
-    $scope.orderItems = order.orderList;
-    $scope.user = user;
+    $scope.order = order || {};
+    $scope.orderItems = $scope.order.orderList || [];
+    $scope.user = user || {};
     var uid = user ? user._id : null;
-
     $scope.removeOrderItem = function(item){
         item.quantity = 0;
         updateOrderItem(item);
@@ -46,8 +45,33 @@ app.controller('CheckoutCtrl', function ($scope, $state, userFactory, orderFacto
             $scope.orderItems = res.data.orderList;
         });
     }
-    //$scope.createUser = function(){
-    //    $scope.user.address.push($scope.address);
-    //    userFactory.createUser($scope.user);
-    //}
+    $scope.checkout = function(){
+        //find out the created order and change status to pending, adding shipping and credit info
+        $scope.order.shippingAddress = angular.copy($scope.user.shippingAddress);
+        $scope.order.creditCard = angular.copy($scope.user.creditCard);
+        orderFactory.placeOrder($scope.order).then(function(data){
+            console.log(data);
+            if(uid){
+                $scope.user.shippingAddress = angular.copy($scope.user.shippingAddress);
+                $scope.order.creditCard = angular.copy($scope.user.creditCard);
+                var userUpdate = {
+                    shippingAddress: angular.copy($scope.user.shippingAddress),
+                    creditCard: angular.copy($scope.user.creditCard)
+                };
+                userFactory.updateUser(uid,userUpdate).then(function(){
+                    $state.go('orders');
+                });
+            }
+        });
+
+        //push order to order history
+
+        //update user information
+
+
+    }
+
+    $scope.status = {
+        isFirstOpen: true
+    };
 });

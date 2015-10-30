@@ -25,12 +25,14 @@ navbar {
   .nav > li > a {
     cursor: pointer;
     transition: color 0.2s;
+    border-bottom: 3px solid white;
     &.active {
       color: darken(#f31214, 10%);
     }
     &:hover {
       background: none;
-      color: #f31214;
+      border-bottom: 3px solid black;
+
     }
     &:focus {
       background: none;

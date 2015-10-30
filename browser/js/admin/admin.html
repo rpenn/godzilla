@@ -1,0 +1,61 @@
+
+<div class="well" ng-repeat="user in users">
+    <div>
+        <label>Email:</label>
+        {{user.email}}
+    </div>
+    <div>
+        <label>Role:</label>
+        {{user.group}}
+    </div>
+    <div>
+        <label>Address1:</label>
+        {{user.shippingAddress.address1}}
+    </div>
+    <div>
+        <label>Address2:</label>
+        {{user.shippingAddress.address2}}
+    </div>
+    <div>
+        <label>City:</label>
+        {{user.shippingAddress.city}}
+    </div>
+    <div>
+        <label>State:</label>
+        {{user.shippingAddress.state}}
+    </div>
+    <div>
+        <label>Zip:</label>
+        {{user.shippingAddress.zip}}
+    </div>
+    <div>
+        <label>Credit Address1:</label>
+        {{user.creditCard.billingAddress.address1}}
+    </div>
+    <div>
+        <label>Credit Address2:</label>
+        {{user.creditCard.billingAddress.address2}}
+    </div>
+    <div>
+        <label>Credit City:</label>
+        {{user.creditCard.billingAddress.city}}
+    </div>
+    <div>
+        <label>Credit State:</label>
+        {{user.creditCard.billingAddress.state}}
+    </div>
+    <div>
+        <label>Credit Zip:</label>
+        {{user.creditCard.billingAddress.zip}}
+    </div>
+</div>
+
+
+<div class="well" ng-repeat="order in orders">
+    <div>Last Change: {{order.ModifiedDate}}</div>
+    <div ng-repeat="orderItem in order.orderList">
+        {{orderItem.product[0].brand}} - {{orderItem.product[0].name}} - {{orderItem.size}} - {{orderItem.quantity}}
+    </div>
+    <a class="btn btn-primary" ng-click="changeStatus('complete')">Complete</a>
+    <a class="btn btn-primary" ng-click="changeStatus('cancel')">Cancel</a>
+</div>

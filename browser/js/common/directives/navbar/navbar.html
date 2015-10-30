@@ -19,7 +19,7 @@
                     Hello, {{ user.email }}!
                 </a>
                 <ul class="uib-dropdown-menu" aria-labelledby="simple-dropdown">
-                    <li ng-repeat="choice in loginUserDropdown">
+                    <li ng-repeat="choice in loginUserDropdown" ng-show="(!choice.auth || isLoggedIn()) && (!choice.admin || isAdmin())">
                         <a ui-sref-active="active" ui-sref="{{ choice.state }}">{{ choice.label }}</a>
                     </li>
                 </ul>
