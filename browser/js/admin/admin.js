@@ -24,7 +24,7 @@ app.controller('AdminCtrl', function ($scope, AuthService, $state, orderFactory,
     $scope.users = users;
 
 
-    
+
 
 //Orders
     //Show all orders

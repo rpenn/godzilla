@@ -10,7 +10,6 @@ app.config(function ($stateProvider) {
             },
             order: function(orderFactory, user){
                 var uid = user ? user._id : null;
-
                 return orderFactory.getCreatedOrder(uid).then(function(res){
                     return res.data;
                 });
@@ -31,7 +30,6 @@ app.controller('CheckoutCtrl', function ($scope, $state, userFactory, orderFacto
     $scope.orderItems = $scope.order.orderList || [];
     $scope.user = user || {};
     var uid = user ? user._id : null;
-console.log(user);
     $scope.removeOrderItem = function(item){
         item.quantity = 0;
         updateOrderItem(item);

@@ -73,7 +73,7 @@ var userSchema = new mongoose.Schema({
             }
         }
     },
-    orderHistory : [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
+    //orderHistory : [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}],
     password: {
         type: String
     },
