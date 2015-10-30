@@ -11,7 +11,8 @@ module.exports = function (app) {
     var facebookCredentials = {
         clientID: facebookConfig.clientID,
         clientSecret: facebookConfig.clientSecret,
-        callbackURL: facebookConfig.callbackURL
+        callbackURL: facebookConfig.callbackURL,
+        profileFields: ['email']
     };
 
     var verifyCallback = function (accessToken, refreshToken, profile, done) {
@@ -24,6 +25,7 @@ module.exports = function (app) {
                     return user;
                 } else {
                     return UserModel.create({
+                        email: profile.emails[0].value,
                         facebook: {
                             id: profile.id
                         }
