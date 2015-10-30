@@ -11,9 +11,7 @@ app.factory('userFactory', ['$http', function($http) {
 
     // Create a new user
     userFactory.createUser = function (user) {
-      return $http.post(urlBase, user).then(function(result){
-        return result;
-      });
+      return $http.post(urlBase, user);
     };
 
     // Get an individual user by id

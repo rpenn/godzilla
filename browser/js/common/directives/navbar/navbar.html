@@ -10,21 +10,31 @@
                 <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
             </li>
         </ul>
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
-        <button ng-show="!user" ui-sref="signup" class="btn  login-button">Signup</button>
-        <button ng-show="!user" ui-sref="checkout" class="btn  login-button"><i class="fa fa-shopping-cart fa-lg"></i></button>
+
+        <button  ng-show="!user" ui-sref="login" class="btn login-button"><i class="fa fa-sign-in"></i> Login</button>
+        <button  ng-show="!user" ui-sref="checkout" class="btn  login-button"><i class="fa fa-shopping-cart fa-lg"></i></button>
+
+
         <div ng-show="user" class="welcome">
-            <span uib-dropdown on-toggle="toggled(open)">
-                <a href id="simple-dropdown" uib-dropdown-toggle>
-                    Hello, {{ user.email }}!
-                </a>
-                <ul class="uib-dropdown-menu" aria-labelledby="simple-dropdown">
-                    <li ng-repeat="choice in loginUserDropdown" ng-show="(!choice.auth || isLoggedIn()) && (!choice.admin || isAdmin())">
-                        <a ui-sref-active="active" ui-sref="{{ choice.state }}">{{ choice.label }}</a>
-                    </li>
-                </ul>
-            </span>
-            <a class="btn btn-info" ng-click="logout()">Logout</a>
+            <div class="row" style="width: 50%">
+                <div class="col-lg-6" uib-dropdown on-toggle="toggled(open)">
+                    <a href id="user-dropdown" uib-dropdown-toggle>
+                        <i class="fa fa-bars fa-2x"></i>
+                    </a>
+                    <ul class="uib-dropdown-menu" aria-labelledby="simple-dropdown">
+                        <!--<a href id="simple-dropdown" uib-dropdown-toggle>-->
+                        <!--Hello, {{ user.email }}!-->
+                        <!--</a>-->
+                        <li ng-repeat="choice in loginUserDropdown" ng-show="(!choice.auth || isLoggedIn()) && (!choice.admin || isAdmin())">
+                            <a ui-sref-active="active" ui-sref="{{ choice.state }}">{{ choice.label }}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                     <a class="btn btn-info" ng-click="logout()">  <i class="fa fa-sign-out"></i>Log Out </a>
+                </div>
+
+            </div>
         </div>
     </div>
 </nav>

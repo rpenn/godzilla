@@ -20,11 +20,10 @@ function error (err) {
 });
 
 //create a new user
-router.post('/', restrict.admin, function (req, res, next){
+//restrict.admin
+router.post('/', function (req, res, next){
+    console.log(req.body);
     if(req.body){
-    	for(var x=0; x < req.body.address.length; x++){
-    		req.body.address[x] = new Address(req.body.address[x]);
-    	}
        var user = new User(req.body);
         user.save()
             .then(function (user) {

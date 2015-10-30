@@ -79,7 +79,8 @@ var userSchema = new mongoose.Schema({
     },
     group: {
         type: String,
-        enum: ['member', 'admin']
+        enum: ['member', 'admin'],
+        default: 'member'
     },
     salt: {
         type: String
