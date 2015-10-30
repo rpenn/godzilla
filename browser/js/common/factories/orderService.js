@@ -35,6 +35,12 @@ app.factory('orderFactory', ['$http', function($http) {
       });
     };
 
+    orderFactory.getAll = function () {
+        return $http.get(urlBase).then(function(result){
+            return result.data;
+        });
+    };
+
     // Place an order
     orderFactory.placeOrder = function (order) {
       return $http.post(urlBase+'/checkout', order);

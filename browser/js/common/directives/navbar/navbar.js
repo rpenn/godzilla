@@ -22,8 +22,10 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             ];
 
             scope.loginUserDropdown = [
-                {label:'Check Out', state:'checkout'},
-                {label:'Orders', state:'orders'}
+                {label:'Cart', state:'checkout'},
+                {label:'Order History', state:'orders', auth: true},
+                {label:'Admin', state:'admin', auth: true, admin: true},
+                {label:'Create Product', state:'product.add', auth: true, admin: true}
             ];
 
             scope.status = {

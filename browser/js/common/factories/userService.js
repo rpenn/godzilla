@@ -5,7 +5,7 @@ app.factory('userFactory', ['$http', function($http) {
     // Get all users
     userFactory.getAllUsers = function () {
       return $http.get(urlBase).then(function(result){
-        return result;
+        return result.data;
       });
     };
 

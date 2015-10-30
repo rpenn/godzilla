@@ -5,8 +5,23 @@ var OrderItem = mongoose.model('OrderItem');
 var _ = require('lodash');
 //var restrict = require('../../../services/restrict');
 
-//get all orders
-//MJS new route
+
+
+router.get('/', function (req, res, next){
+    Order.find()
+        .populate('orderList.product')
+        .exec()
+        .then( fulfilled, error )
+
+    function fulfilled (value) {
+        res.json(value).status(204);
+    }
+    function error (err) {
+        next(err);
+    }
+
+});
+
 router.get('/:uid', function (req, res, next){
 	Order.find({uid: req.params.uid})
     .populate('orderList.product')
