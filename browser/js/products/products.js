@@ -159,9 +159,10 @@ app.controller('AddEmailCtrl', function ($scope, $uibModalInstance) {
     };
 });
 
-app.controller('ProductAddCtrl', function ($scope, $state, productFactory) {
+app.controller('ProductAddCtrl', function ($scope, $state, productFactory, categoryFactory) {
 
     $scope.product = {
+        cat1: 'clothing',
         tags: [],
         photo: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Polo_Shirt_Basic_Pattern.png'
     };
@@ -173,6 +174,16 @@ app.controller('ProductAddCtrl', function ($scope, $state, productFactory) {
             }
         }
     }
+
+    $scope.catoptions1 = ['clothing', 'shoes', 'accessories', 'grooming'];
+    $scope.popSubOptions = function(n, cat){
+        categoryFactory.findSubCategory(cat).then(function(res){
+            $scope['catoptions'+n] = res.data ? res.data.subCat : [];
+        }).catch(function(err){
+
+        });
+
+    };
 
     $scope.addToTags = function(){
         removeItem($scope.oneTag, $scope.product.tags);
