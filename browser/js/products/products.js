@@ -279,7 +279,7 @@ app.controller('ProductEditCtrl', function ($scope, $state, productFactory, cate
 
 });
 
-app.controller('ProductItemCtrl', function ($scope, $state, product) {
+app.controller('ProductItemCtrl', function ($scope, $state, product, isUser, reviews) {
 
     $scope.isUser = isUser;
     $scope.orderItem = {product: angular.copy(product)};
