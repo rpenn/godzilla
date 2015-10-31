@@ -67,6 +67,19 @@ router.get('/:uid/created', function(req, res, next){
     }
 });
 
+router.get('/order_detail/:oid', function(req, res, next){
+    Order.findOne({_id: req.params.oid})
+        .populate('orderList.product')
+        .exec()
+        .then( fulfilled, error )
+
+    function fulfilled (value) {
+        res.json(value);
+    }
+    function error (err) {
+        next(err);
+    }
+});
 
 
 

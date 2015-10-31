@@ -47,9 +47,9 @@ app.factory('orderFactory', ['$http', function($http) {
     };
 
     // Get an individual order by id
-    orderFactory.getOrder = function (id) {
-      return $http.get(urlBase + '/' + id).then(function(result){
-        return result;
+    orderFactory.getOrder = function (uid, oid) {
+      return $http.get(urlBase + '/order_detail/'+ oid).then(function(result){
+        return result.data;
       });
     };
 

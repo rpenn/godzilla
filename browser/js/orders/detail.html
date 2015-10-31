@@ -1,0 +1,40 @@
+<div class="container body-container">
+    <div class="row order_history_header">
+        <div class="col-md-4">
+            <p>Order by</p>
+        </div>
+        <div class="col-md-4">
+            <p>Shipped to</p>
+        </div>
+        <div class="col-md-4">
+            <p>Summary of charges</p>
+        </div>
+    </div>
+    <div class="row order_item" >
+        <div class="col-md-4">
+            <p>{{order.creditCard.nameOnCard}}</p>
+            <p>{{order.creditCard.billingAddress.address1}}</p>
+            <p>{{order.creditCard.billingAddress.address2}}</p>
+            <p>{{order.creditCard.billingAddress.city}}, {{order.creditCard.billingAddress.state}} {{order.creditCard.billingAddress.zip}}</p>
+            <hr>
+            <h5>Payment Method:</h5>
+            <p>xxxxxxxxxxxxxx{{order.creditCard.cardNumber.slice(order.creditCard.cardNumber.length-4, 4)}}</p>
+            <p>{{order.creditCard.expMon}}/{{order.creditCard.expYear}}</p>
+
+        </div>
+        <div class="col-md-4">
+            <p>{{order.shippingAddress.firstName}} {{order.shippingAddress.lastName}}</p>
+            <p>{{order.shippingAddress.address1}}</p>
+            <p>{{order.shippingAddress.address2}}</p>
+            <p>{{order.shippingAddress.city}}, {{order.shippingAddress.state}} {{order.shippingAddress.zip}}</p>
+        </div>
+        <div class="col-md-4 sum-charges">
+            <p>Merchandise: {{charges.merchandise | currency}}</p>
+            <p>discount: {{charges.discount | currency}}</p>
+            <p>Shipping: {{charges.shipping | currency}}</p>
+            <p>Tax: {{charges.tax | currency}}</p>
+            <label>Total: {{charges.merchandise + charges.Shipping + charges.tax - charges.discount |currency}}</label>
+        </div>
+    </div>
+
+</div>

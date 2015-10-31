@@ -4,6 +4,7 @@
 
 body {
   background: #fdfdfd;
+  font-family: monaco, Consolas, 'Lucida Console', monospace;
 }
 
 @mixin clearfix {
@@ -20,6 +21,29 @@ body {
   margin: 0 auto;
 }
 
+.body-container{
+  padding: 100px;
+  .order_history_header{
+    text-align: center;
+    background-color: #ccc;
+    color: #ffffff;
+    div {
+      border: 1px solid #ffffff;
+      p{
+        margin: 5px;
+      }
+    }
+  }
+  .order_item {
+      padding:20px;
+      border-bottom: 1px solid #ccc;
+  }
+  .sum-charges {
+    p{
+      border-bottom: 1px solid #ccc;
+    }
+  }
+}
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
