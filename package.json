@@ -7,7 +7,6 @@
     "start": "node server/start.js",
     "postinstall": "gulp build"
   },
-
   "dependencies": {
     "angular": "^1.4.0",
     "angular-bootstrap": "^0.12.0",
