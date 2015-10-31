@@ -56,6 +56,6 @@
     <div ng-repeat="orderItem in order.orderList">
         {{orderItem.product[0].brand}} - {{orderItem.product[0].name}} - {{orderItem.size}} - {{orderItem.quantity}}
     </div>
-    <a class="btn btn-primary" ng-click="changeStatus('complete')">Complete</a>
-    <a class="btn btn-primary" ng-click="changeStatus('cancel')">Cancel</a>
+    <a class="btn btn-primary" ng-show="order.status === 'processing'" ng-click="changeStatus('complete', order)">Complete</a>
+    <a class="btn btn-primary" ng-show="order.status === 'processing'" ng-click="changeStatus('cancel', order)">Cancel</a>
 </div>

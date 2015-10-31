@@ -23,8 +23,11 @@ app.controller('AdminCtrl', function ($scope, AuthService, $state, orderFactory,
     $scope.orders = orders;
     $scope.users = users;
 
-
-
+    $scope.changeStatus = function(status, order){
+        orderFactory.updateOrderState(status, order).then(function(res){
+            console.log(res);
+        });
+    };
 
 //Orders
     //Show all orders

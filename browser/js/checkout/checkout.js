@@ -45,6 +45,10 @@ app.controller('CheckoutCtrl', function ($scope, $state, userFactory, orderFacto
             $scope.orderItems = res.data.orderList;
         });
     }
+
+    $scope.itemQuantity =
+    $scope.quantity_List = [1,2,3,4,5,6];
+
     $scope.checkout = function(){
         //find out the created order and change status to pending, adding shipping and credit info
         $scope.order.shippingAddress = angular.copy($scope.user.shippingAddress);
@@ -67,9 +71,7 @@ app.controller('CheckoutCtrl', function ($scope, $state, userFactory, orderFacto
         //push order to order history
 
         //update user information
-
-
-    }
+    };
 
     $scope.status = {
         isFirstOpen: true

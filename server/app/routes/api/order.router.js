@@ -261,6 +261,21 @@ router.put('/updateorderitem', function (req, res, next) {
     }
 });
 
+
+router.put('/orderstate/:state', function (req, res, next){
+    console.log('0--------test-');
+    var order = req.body.order;
+    Order.findById(order._id)
+        .then(function (doc) {
+            doc.status = req.body.status;
+            return doc.save()
+        })
+        .then(function (newOrder) {
+            res.json(newOrder);
+        })
+        .then(null, next);
+});
+
 router.post('/checkout', function(req, res, next){
     var body = req.body;
     Order.findOne({_id: body._id}).then(function(doc){
@@ -318,6 +333,7 @@ router.put('/user_order', function (req, res, next){
         })
 		.then(null, next);
 });
+
 
 router.delete('/delete/:id', function (req, res, next) {
 	Order.findById(req.params.id).remove()
