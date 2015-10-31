@@ -24,12 +24,20 @@ function error (err) {
 router.post('/', function (req, res, next){
     console.log(req.body);
     if(req.body){
-       var user = new User(req.body);
-        user.save()
-            .then(function (user) {
-                res.status(201).json(user)
-            })
-            .then(null, next);
+       User.findOne({"email": req.body.email})
+       .then(function(user){
+        if (user){
+          res.status(403).json("Email has alredy been used.")
+        }
+       else{
+          var user = new User(req.body);
+          user.save()
+              .then(function (user) {
+                  res.status(201).json(user)
+              })
+              .then(null, next);
+        }
+    })
     }
 });
 

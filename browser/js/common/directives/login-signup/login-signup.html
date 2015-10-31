@@ -1,6 +1,6 @@
 <form id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendAuth(auth)">
     <alert type="danger" ng-show="error">
-        {{ error }}
+        {{ error.data }}
     </alert>
 
     <div class="form-group">
