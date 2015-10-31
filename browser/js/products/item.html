@@ -7,7 +7,7 @@
                         <img src="{{orderItem.product.photo}}">
                     </a>
                 </div>
-                <div class="col-lg-4">
+                < class="col-lg-4">
                     <h2><a href="#">{{orderItem.product.brand}}</a></h2>
                     <h3><a href="#" ui-sref="products.detail({id: orderItem.product._id})">{{orderItem.product.name}}</a></h3>
                     <h1>{{orderItem.product.price | currency}}</h1>
@@ -26,11 +26,15 @@
                             <option value="xl">XL</option>
                         </select>
                     </div>
+                    <a class="label label-info" ng-if="orderItem.product.cat1" ui-sref="products.category({cat1: orderItem.product.cat1})">{{orderItem.product.cat1}}</a>
+                    <a class="label label-info" ng-if="orderItem.product.cat2" ui-sref="products.category2({cat1: orderItem.product.cat1, cat2: orderItem.product.cat2})">{{orderItem.product.cat2}}</a>
+                    <a class="label label-info" ng-if="orderItem.product.cat3" ui-sref="products.category3({cat1: orderItem.product.cat1, cat2: orderItem.product.cat2, cat3: orderItem.product.cat3})">{{orderItem.product.cat3}}</a>
                 </div>
                 <div class="col-lg-4">
                     <div class="btn-group">
-                        <a class="btn btn-primary" ng-click="addToCart(orderItem)" ng-disabled="!orderItem.quantity">Add To Card</a>
+                        <a class="btn btn-primary" ng-click="addToCart(orderItem)" ng-disabled="!orderItem.quantity">Add To Cart</a>
                     </div>
+                    <a  class="btn btn-warning"ui-sref="products.edit({id:orderItem.product._id})">Edit</a>
                     <div class="well">
                         <label>Description: </label>
                         <div>{{orderItem.product.description}}</div>

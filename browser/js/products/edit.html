@@ -1,0 +1,58 @@
+<div class='container'>
+    <div class="form-group">
+        <label for="name">Brand</label>
+        <input type="text" class="form-control" id="brand" ng-model="product.brand" placeholder="Product Brand">
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" ng-model="product.name" placeholder="Product Name">
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" ng-model="product.price" placeholder="$23.22">
+    </div>
+
+    <div class="form-group">
+        <label for="category1">Category1</label>
+        <select id="category1" ng-model="product.cat1" ng-change="popSubOptions(2, product.cat1)">
+            <option ng-repeat="item in catoptions1">{{item}}</option>
+        </select>
+        <!--<input type="text" class="form-control" id="category1"  ng-model="product.cat1" placeholder="category1">-->
+    </div>
+    <div class="form-group" ng-show="catoptions2.length">
+        <label for="category2">Category2</label>
+        <select id="category2" ng-model="product.cat2" ng-change="popSubOptions(3, product.cat2)">
+            <option ng-repeat="item in catoptions2">{{item}}</option>
+        </select>
+        <!--<input type="text" class="form-control" id="category2"  ng-model="product.cat2" placeholder="category2">-->
+    </div>
+    <div class="form-group" ng-show="catoptions3.length">
+        <label for="category3">Category3</label>
+        <select id="category3" ng-model="product.cat3">
+            <option ng-repeat="item in catoptions3">{{item}}</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" class="form-control" id="tags" ng-model="oneTag" placeholder="tags">
+        <a  ng-click="addToTags()" class="btn btn-primary"><i class="fa fa-plus fa-lg"></i></a>
+        <a class="btn btn-warning" ng-repeat="item in product.tags">
+            <span>{{item}}</span>
+            <i ng-click="removeFromTags(item)" class="fa fa-minus"></i>
+        </a>
+    </div>
+    <div class="form-group">
+        <label for="photo">Photo URL</label>
+        <input type="text" class="form-control" id="photo" ng-model="product.photo" placeholder="www.photoUrl.com">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" ng-model="product.description" placeholder="description">
+    </div>
+
+    <button ng-click="editProduct()" type="submit" class="btn btn-default">Update</button>
+    <button ng-click="removeProduct()" type="submit" class="btn btn-default">Remove</button>
+    </form>
+
+</div>
