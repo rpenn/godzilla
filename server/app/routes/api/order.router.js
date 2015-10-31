@@ -263,11 +263,11 @@ router.put('/updateorderitem', function (req, res, next) {
 
 
 router.put('/orderstate/:state', function (req, res, next){
-    console.log('0--------test-');
     var order = req.body.order;
     Order.findById(order._id)
         .then(function (doc) {
             doc.status = req.body.status;
+            console.log(doc);
             return doc.save()
         })
         .then(function (newOrder) {

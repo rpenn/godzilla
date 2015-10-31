@@ -94,8 +94,9 @@ router.put('/:id', function (req, res, next){
 });
 
 //delete by id
-router.delete('/:id', restrict.admin, function (req, res, next) {
-	User.findOneAndRemove( {_id: req.params.id} )
+router.delete('/:id', function (req, res, next) {
+    console.log(req.params.id);
+	User.remove( {_id: req.params.id} )
 		.then(function() {
 			res.status(204).end();
 		})

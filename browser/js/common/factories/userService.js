@@ -28,9 +28,7 @@ app.factory('userFactory', ['$http', function($http) {
 
     // Delete a user
     userFactory.deleteUser = function (id) {
-      return $http.delete(urlBase + '/' + id).then(function(result){
-        return result;
-      });
+      return $http.delete(urlBase + '/' + id);
     };
 
     return userFactory;

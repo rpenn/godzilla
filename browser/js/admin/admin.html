@@ -48,6 +48,9 @@
         <label>Credit Zip:</label>
         {{user.creditCard.billingAddress.zip}}
     </div>
+    <div>
+        <span class="btn btn-danger" ng-click="removeUser(user._id)">Remove User</span>
+    </div>
 </div>
 
 
@@ -56,6 +59,6 @@
     <div ng-repeat="orderItem in order.orderList">
         {{orderItem.product[0].brand}} - {{orderItem.product[0].name}} - {{orderItem.size}} - {{orderItem.quantity}}
     </div>
-    <a class="btn btn-primary" ng-show="order.status === 'processing'" ng-click="changeStatus('complete', order)">Complete</a>
-    <a class="btn btn-primary" ng-show="order.status === 'processing'" ng-click="changeStatus('cancel', order)">Cancel</a>
+    <a class="btn btn-primary" ng-show="order.status === 'processing'" ng-click="changeStatus('completed', order)">Complete</a>
+    <a class="btn btn-primary" ng-show="order.status === 'processing'" ng-click="changeStatus('cancelled', order)">Cancel</a>
 </div>

@@ -19,13 +19,22 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('AdminCtrl', function ($scope, AuthService, $state, orderFactory, orders, users) {
+app.controller('AdminCtrl', function ($scope, AuthService, $state, orderFactory, orders, users, userFactory) {
     $scope.orders = orders;
     $scope.users = users;
-
     $scope.changeStatus = function(status, order){
         orderFactory.updateOrderState(status, order).then(function(res){
-            console.log(res);
+            return orderFactory.getAll();
+        }).then(function(data){
+            $scope.orders = data;
+        });
+    };
+
+    $scope.removeUser = function(uid){
+        userFactory.deleteUser(uid).then(function(){
+            return userFactory.getAllUsers();
+        }).then(function(data){
+            $scope.users = data;
         });
     };
 
