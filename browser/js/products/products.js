@@ -64,8 +64,14 @@ app.config(function ($stateProvider) {
             templateUrl: 'js/products/item.html',
             controller: 'ProductItemCtrl',
             resolve: {
+                reviews: function (reviewFactory, $stateParams) {
+                    return reviewFactory.getReviewByProduct($stateParams.id);
+                        },
                 product: function (productFactory, $stateParams) {
                     return productFactory.getProduct($stateParams.id);
+                },
+                isUser: function(AuthService){
+                    return AuthService.getLoggedInUser();
                 }
             }
         });
@@ -203,8 +209,9 @@ app.controller('ProductAddCtrl', function ($scope, $state, productFactory, categ
 
 });
 
-app.controller('ProductItemCtrl', function ($scope, $state, product) {
+app.controller('ProductItemCtrl', function ($scope, $state, product, reviews, isUser) {
 
+    $scope.isUser = isUser;
     $scope.orderItem = {product: angular.copy(product)};
-
+    $scope.reviews = reviews;
 });

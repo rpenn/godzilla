@@ -36,7 +36,31 @@
                         <div>{{orderItem.product.description}}</div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="well">
+                        <hr>
+                            <reviews-section order-Id="{{orderItem.product._id}}"></reviews-section>
+                        <hr>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                    <label>Leave a review!</label>
+                        <div class="well">
+                            <div ng-show="isUser">
+
+                                <review-leave product-id="{{orderItem.product._id}}"></review-leave>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
     <script type="text/ng-template" id="myModalAddEmail.html">

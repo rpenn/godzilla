@@ -14,12 +14,12 @@ router.get('/', function (req, res, next){
 
   Review.find()
  .populate(populateQuery)
- .execPopulate()
+ .exec()
     .then( fulfilled, error )
 
 function fulfilled (value) {
 
-      res.json(value).status(200);
+        res.json(value).status(200);
 }
 function error (err) {
      next(err);
@@ -30,10 +30,10 @@ function error (err) {
 //get review by product ID
 router.get('/product/:productId', function (req, res, next){
   Review.find( {
-    product: req.params.productId
+    "product": req.params.productId
   } )
   .populate(populateQuery)
-  .execPopulate()
+  .exec()
   .then( reviews, error )
 
   function reviews (reviews) {
@@ -47,14 +47,8 @@ router.get('/product/:productId', function (req, res, next){
 });
 
 //create new review
-router.post('/product/:productId/user/:userId/review', function (req, res, next) {
-  var newReview = {
-    product: req.params.id,
-    user: req.params.userId,
-    comment: req.body.comment,
-    starRating: req.body.rating
-  };
-    Review.create(newReview)
+router.post('/create', function (req, res, next) {
+    Review.create(req.body)
     .then( fulfilled, error )
 
   function fulfilled (value) {

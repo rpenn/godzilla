@@ -1,0 +1,43 @@
+<div class='container'>
+<form>
+<div class="row">
+    <div class="col-lg-4">
+        <div>
+          <div class="form-group">
+            <label for="starRating">Star Rating</label>
+            <select id="starRating" ng-model="review.starRating" ng-change="showRating(review.starRating)" >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div>
+            <label>Rating:</label>
+            <span ng-repeat="ix in finalStarNumber track by $index">
+              <i class="fa fa-star"></i>
+            </span>
+          </div>
+       </div>
+    </div>
+    <div class="col-lg-8">
+      <div>
+          <div class="comment col-xs-8">
+            <div>
+            <label for="comment">Comment</label>
+            </div>
+            <input type="text" class="form-control"
+            id="comment" ng-model="review.comment"
+            placeholder="this is a comment">
+                <button ng-click="addReview()" type="submit" class="btn btn-default">
+    Submit</button>
+          </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</form>
+

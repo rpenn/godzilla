@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose');
-
+var User = mongoose.model('User')
+var Product = mongoose.model('Product')
 
 var ReviewSchema = new mongoose.Schema({
        user: {
@@ -24,13 +25,17 @@ var ReviewSchema = new mongoose.Schema({
        timestamp: {
           type: Date,
           defaule: Date.now,
-          required: true
        }
 });
 
 ReviewSchema.methods.findUser = function findUser() {
   var review = this;
   return User.findOne({"_id": review.user}).exec();
+};
+
+ReviewSchema.methods.findProduct = function findProduct() {
+  var review = this;
+  return Product.findOne({"_id": review.user}).exec();
 };
 
 mongoose.model('Review', ReviewSchema);
