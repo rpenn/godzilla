@@ -1,0 +1,17 @@
+<div class="container" ui-sref-active="active">
+  <div class="panel panel-default" ng-repeat="review in reviews">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-8">
+        {{review.comment}}
+        </div>
+        <div class="col-lg-4">
+        {{review.product}}
+        {{review.id}}
+        {{review.starRating}}
+        {{review.timestamp}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

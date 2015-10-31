@@ -1,6 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-var Review = mongoose.model('Review')
+// var Review = mongoose.model('Review')
 
 var ProductSchema = new mongoose.Schema({
        brand: {
@@ -31,7 +31,7 @@ var ProductSchema = new mongoose.Schema({
            default: 0,
            required: true
        },
-       reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Review"}],
+       // reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "Review"}],
        modifiedDate: {
            type : Date, default: Date.now
        }
