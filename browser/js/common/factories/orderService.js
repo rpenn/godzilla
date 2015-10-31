@@ -60,6 +60,10 @@ app.factory('orderFactory', ['$http', function($http) {
       });
     };
 
+    orderFactory.updateOrderState = function (state, orderInfo) {
+        return $http.put(urlBase + '/orderstate/'+state, {state: state, order: orderInfo});
+    };
+
     //orderFactory.addToOrder = function () {
     //    return $http.put(urlBase + '/user_order', currentCart).then(function(result){
     //        return result;

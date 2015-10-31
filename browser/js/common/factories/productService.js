@@ -1,5 +1,5 @@
 app.factory('productFactory', ['$http', function($http) {
-    var urlBase = '/api/product/';
+    var urlBase = '/api/product';
     var productFactory = {};
 
     // Get all products
@@ -22,17 +22,14 @@ app.factory('productFactory', ['$http', function($http) {
     };
 
     // Update a product by id
-    productFactory.updateProduct = function (id, productInfo) {
-      return $http.put(urlBase + '/' + id, productInfo).then(function(result){
-        return result;
-      });
+    productFactory.updateProduct = function (product) {
+        console.log(product);
+      return $http.put(urlBase + '/', product);
     };
 
     // Delete a product by id
-    productFactory.deleteUser = function (id) {
-      return $http.delete(urlBase + '/' + id).then(function(result){
-        return result;
-      });
+    productFactory.deleteProduct = function (id) {
+      return $http.delete(urlBase + '/' + id);
     };
 
     return productFactory;

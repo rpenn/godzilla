@@ -47,22 +47,30 @@ function error (err) {
 });
 
 //edit producy by id
-router.put('/:id', restrict.admin, function (req, res, next) {
-    Product.findById(req.params.id)
+router.put('/', function (req, res, next) {
+;    Product.findById(req.body._id)
         .then(function (product) {
-            for (var key in product) {
+            for (var key in req.body) {
+                if(key === 'price'){
+                    console.log(product[key], req.body[key]);
+                }
+
                 product[key] = req.body[key]
             }
+            console.log(product);
             product.save()
                 .then(function (newProduct) {
                     res.status(203).json(newProduct);
                 })
-        }, error(err) )
+        }, error );
+    function error (err) {
+        next(err);
+    }
 });
 
 //delete product by id
-router.delete('/:id',restrict.admin, function (req, res, next) {
-    Product.findById(req.params.id).remove()
+router.delete('/:id', function (req, res, next) {
+    Product.remove({_id: req.params.id})
         .then(function () {
             res.status(204).end();
         })
