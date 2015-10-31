@@ -41,6 +41,45 @@ var seedUsers = function () {
 
 };
 
+var seedCategory = function () {
+
+    var categories = [
+       {
+           cat:'clothing',
+           subCat:['blazers', 'casual_shirts', 'coats_jacket', 'jeans', 'suits', 'pants', 'polos', 'shorts', 'swimwear', 't-shirts', 'underwear']
+       },
+       {
+           cat: 'blazers',
+           subCat: ['double_breasted_blazer', 'single_breasted_blazer', 'waistcoat']
+       },
+       {
+           cat: 'jeans',
+           subCat: ['slim_jeans', 'straight_jeans']
+       },
+       {
+           cat:'shoes',
+           subCat: ['boat_shoes', 'boots', 'oxford_shoes', 'drivers', 'loafers', 'slippers', 'sneakers', 'sandals']
+       },
+       {
+           cat:'boots',
+           subCat:['biker_boots', 'chelsea_boots', 'desert_boots', 'lace_up_boots', 'work_boots']
+       },
+       {
+           cat: 'accessories',
+           subCat: ['bags','belts', 'cufflinks', 'glasses', 'gloves', 'hats', 'scarves', 'sunglasses', 'ties', 'umbrellas', 'watches']
+       },
+       {
+           cat: 'bags',
+           subCat: ['backpacks', 'briefcases', 'holdalls', 'suit_carriers', 'totes', 'luggage']
+       },
+       {
+           cat: 'grooming',
+           subCat: ['hair', 'face', 'body', 'shave', 'fragrance', 'teeth']
+       }
+   ];
+    return Category.createAsync(categories);
+
+};
 connectToDb.then(function () {
     User.findAsync({}).then(function (users) {
         if (users.length === 0) {
