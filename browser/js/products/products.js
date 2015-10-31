@@ -59,6 +59,19 @@ app.config(function ($stateProvider) {
                 authenticate: true
             }
         })
+        .state('products.edit', {
+            url: '/edit/:id',
+            templateUrl: 'js/products/edit.html',
+            resolve: {
+                product: function(productFactory, $stateParams){
+                    return productFactory.getProduct($stateParams.id);
+                }
+            },
+            controller: 'ProductEditCtrl',
+            data: {
+                authenticate: true
+            }
+        })
         .state('products.detail', {
             url: '/detail/:id',
             templateUrl: 'js/products/item.html',
@@ -88,7 +101,10 @@ app.controller('ProductListCtrl', function ($scope, $state, orderFactory, produc
 
         var uid = $scope.user ? $scope.user._id : null;
         orderFactory.addToOrder(uid, orderItem).then(function(data){
-            console.log(data);
+            var answer = confirm('Do you want checkout?');
+            if(answer === true){
+                $state.go('checkout');
+            }
         });
 
     };
@@ -142,7 +158,11 @@ app.controller('ProductListCategoryCtrl', function ($scope, $state, products, or
         //}
         var uid = $scope.user ? $scope.user._id : null;
         orderFactory.addToOrder(uid, orderItem).then(function(data){
-            console.log(data);
+            var answer = confirm('Do you want checkout?');
+            if(answer === true){
+                $state.go('checkout');
+            }
+
         });
     };
 
@@ -200,6 +220,56 @@ app.controller('ProductAddCtrl', function ($scope, $state, productFactory, categ
             $state.go('products.list');
         });
     };
+
+});
+
+app.controller('ProductEditCtrl', function ($scope, $state, productFactory, categoryFactory, product) {
+
+    $scope.product = {
+        cat1: 'clothing',
+        tags: [],
+        photo: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Polo_Shirt_Basic_Pattern.png'
+    };
+    $scope.product = product;
+    function removeItem(item, arr){
+        for(var i = 0; i<arr.length; i++){
+            if(arr[i] === item){
+                arr.splice(i, 1);
+            }
+        }
+    }
+
+    $scope.catoptions1 = ['clothing', 'shoes', 'accessories', 'grooming'];
+    $scope.popSubOptions = function(n, cat){
+        categoryFactory.findSubCategory(cat).then(function(res){
+            $scope['catoptions'+n] = res.data ? res.data.subCat : [];
+        }).catch(function(err){
+
+        });
+
+    };
+
+    $scope.addToTags = function(){
+        removeItem($scope.oneTag, $scope.product.tags);
+        $scope.product.tags.push($scope.oneTag);
+        $scope.oneTag = null;
+    };
+
+    $scope.removeFromTags = function(tag){
+        removeItem(tag, $scope.product.tags);
+    };
+
+    $scope.editProduct = function(){
+        productFactory.updateProduct($scope.product).then(function(){
+            $state.go('products.list');
+        });
+    };
+
+    $scope.removeProduct = function(){
+        productFactory.deleteProduct($scope.product._id).then(function(){
+            $state.go('products.list');
+        });
+    }
 
 });
 
