@@ -8,7 +8,8 @@ var CreditCard = mongoose.model('CreditCard');
 var userSchema = new mongoose.Schema({
 
     email: {
-        type: String
+        type: String,
+        required: true
     },
     shippingAddress : {
         firstName: {

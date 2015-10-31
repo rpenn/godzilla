@@ -49,6 +49,7 @@ app.controller('SignupCtrl', function ($scope, AuthService, userFactory) {
                 console.log(doc);
             })
             .catch(function (err) {
+                console.log(err)
                 $scope.error = err;
             });
 
