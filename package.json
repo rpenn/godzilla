@@ -5,8 +5,7 @@
   "main": "server/start.js",
   "scripts": {
     "start": "node server/start.js",
-    "postinstall": "gulp build",
-    "postinstall": "npm install"
+    "postinstall": "gulp build"
   },
   "dependencies": {
     "angular": "^1.4.0",
