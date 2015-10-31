@@ -1,11 +1,11 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
-var Categories = mongoose.model('Categories');
+var Category = mongoose.model('Category');
 var restrict = require('../../../services/restrict');
 
 //get all categories
-router.get('/', function (req, res, next){
-  Categories.find().exec()
+router.get('/:cat', function (req, res, next){
+  Category.findOne({cat:req.params.cat}).exec()
     .then( fulfilled, error )
 
 function fulfilled (value) {
@@ -19,7 +19,7 @@ function error (err) {
 
 //create a new category
 router.post('/', restrict.admin, function (req, res, next){
-  Categories.create(req.body)
+  Category.create(req.body)
   .then( fulfilled, error )
 
 function fulfilled (value) {
@@ -29,11 +29,11 @@ function error (err) {
      next(err);
 }
 
-})
+});
 
 //delete by id
 router.delete('/:id', restrict.admin, function (req, res, next) {
-  Categories.findOneAndRemove( {_id: req.params.id} )
+  Category.findOneAndRemove( {_id: req.params.id} )
     .then(function() {
       res.status(204).end();
     })

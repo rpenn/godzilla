@@ -3,8 +3,8 @@
 // anywhere the User model needs to be used.
 
 require('./brand');
-require('./category');
 require('./review');
+require('./category');
 require('./product');
 require('./address');
 require('./creditCard');

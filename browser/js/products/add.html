@@ -14,14 +14,23 @@
 
 	  <div class="form-group">
 	    <label for="category1">Category1</label>
-	    <input type="text" class="form-control" id="category1"  ng-model="product.cat1" placeholder="category1">
+          <select ng-model="product.cat1" ng-change="popSubOptions(2, product.cat1)">
+                <option ng-repeat="item in catoptions1">{{item}}</option>
+          </select>
+	    <!--<input type="text" class="form-control" id="category1"  ng-model="product.cat1" placeholder="category1">-->
 	  </div>
-    <div class="form-group">
+    <div class="form-group" ng-show="catoptions2.length">
 	    <label for="category2">Category2</label>
-	    <input type="text" class="form-control" id="category2"  ng-model="product.cat2" placeholder="category2">
+        <select ng-model="product.cat2" ng-change="popSubOptions(3, product.cat2)">
+            <option ng-repeat="item in catoptions2">{{item}}</option>
+        </select>
+	    <!--<input type="text" class="form-control" id="category2"  ng-model="product.cat2" placeholder="category2">-->
 	  </div>
-    <div class="form-group">
+    <div class="form-group" ng-show="catoptions3.length">
 	    <label for="category3">Category3</label>
+        <select ng-model="product.cat3">
+            <option ng-repeat="item in catoptions3">{{item}}</option>
+        </select>
 	    <input type="text" class="form-control" id="category3"  ng-model="product.cat3" placeholder="category3">
 	  </div>
 
@@ -45,5 +54,5 @@
 
 	  <button ng-click="addProduct()" type="submit" class="btn btn-default">Submit</button>
 	</form>
-    {{product}}
+
 </div>
