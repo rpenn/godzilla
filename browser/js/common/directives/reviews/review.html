@@ -1,28 +1,44 @@
 <div class="row">
       <div style="text-align:center"><label><h1>Reviews</h1></label></div>
-  <div class="col-lg-6">
-    <div style="text-align:center" ng-repeat="review in reviews | limitTo : 3 : 0">
+    <div class="row">
+        <div ng-repeat="review in reviews" class="col-lg-6">
+            <div style="text-align:center">
 
-    <hr>
+                <hr>
 
-      <div><label>Email: </label>{{review.user.email}}</div>
+                <div><label>Email: </label>{{review.user.email}}</div>
 
-      <div><label>Rating:</label><span ng-repeat="i in getNumber(review.starRating) track by $index"><i class="fa fa-star"></i></span></div>
+                <div><label>Rating:</label><span ng-repeat="i in getNumber(review.starRating) track by $index"><i class="fa fa-star"></i></span></div>
 
-      <div><label>Comment:</label>
-        <div>{{review.comment}}</div></div>
+                <div><label>Comment:</label>
+                    <div>{{review.comment}}</div></div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-lg-6">
-    <div style="text-align:center" ng-repeat="review in reviews | limitTo : 3 : 0">
+  <!--<div class="col-lg-6">-->
+    <!--<div style="text-align:center" ng-repeat="review in reviews | limitTo : 3 : 0">-->
 
-    <hr>
+    <!--<hr>-->
 
-      <div><label>Email: </label>{{review.user.email}}</div>
+      <!--<div><label>Email: </label>{{review.user.email}}</div>-->
 
-      <div><label>Rating:</label><span ng-repeat="i in getNumber(review.starRating) track by $index"><i class="fa fa-star"></i></span></div>
+      <!--<div><label>Rating:</label><span ng-repeat="i in getNumber(review.starRating) track by $index"><i class="fa fa-star"></i></span></div>-->
 
-      <div><label>Comment:</label>
-        <div>{{review.comment}}</div></div>
+      <!--<div><label>Comment:</label>-->
+        <!--<div>{{review.comment}}</div></div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="col-lg-6">-->
+    <!--<div style="text-align:center" ng-repeat="review in reviews | limitTo : 3 : 3">-->
+
+    <!--<hr>-->
+
+      <!--<div><label>Email: </label>{{review.user.email}}</div>-->
+
+      <!--<div><label>Rating:</label><span ng-repeat="i in getNumber(review.starRating) track by $index"><i class="fa fa-star"></i></span></div>-->
+
+      <!--<div><label>Comment:</label>-->
+        <!--<div>{{review.comment}}</div></div>-->
+    <!--</div>-->
+  <!--</div>-->
     </div>
-  </div>

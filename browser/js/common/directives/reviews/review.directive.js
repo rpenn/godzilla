@@ -8,6 +8,9 @@ app.directive('reviewsSection', function () {
         scope.getNumber = function (num) {
           return new Array(num);
         };
+          //if(scope.reviews.length % 2) {
+          //    scope.reviews.push(null);
+          //}
       }
     }
   })
